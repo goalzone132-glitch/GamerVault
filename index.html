@@ -93,21 +93,22 @@ textarea:focus{border-color:var(--cy);box-shadow:0 0 0 3px #22e5ff22,0 0 16px #2
   overflow-y: auto !important;
   padding-bottom: 20px !important;
 }
-/* মোবাইল ডিভাইসে পপআপ মোডাল ও বাটন সম্পূর্ণ দৃশ্যমান রাখার ফিক্স */
-@media (max-width: 600px) {
-  /* মোডালকে স্ক্রিনের মাঝামাঝি রাখা ও ব্যানার থেকে ওপরে তোলা */
-  [class*="modal"], [class*="dialog"], .modal-content {
-    max-height: 70vh !important;
-    overflow-y: auto !important;
-    margin-bottom: 70px !important;
-    padding-bottom: 30px !important;
+/* মোবাইলে স্ক্রিন ছোট হওয়া ও কিবোর্ড উঠলে মোডাল অ্যাড্রেস ফিক্স */
+@media screen and (max-width: 600px) {
+  /* পুরো ব্যাকড্রপ/মোডাল কন্টেইনার নিচে জায়গা ছাড়বে */
+  div[class*="modal"], div[id*="modal"], div[role="dialog"] {
+    align-items: flex-start !important;
+    padding-top: 20px !important;
+    padding-bottom: 90px !important;
   }
 
-  /* কিবোর্ড উঠলে বা ছোট স্ক্রিনে ক্রিয়েট স্কোয়াড বাটন ফিক্স */
-  button[type="submit"], .modal button {
-    margin-bottom: 15px !important;
+  /* মোডালের ভেতরের মূল বক্স সংকুচিত হয়ে স্ক্রোলিং সক্রিয় করবে */
+  div[class*="modal"] > div, div[id*="modal"] > div, .modal-card, .modal-content {
+    max-height: calc(100vh - 160px) !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
   }
-} 
+}
 </style>
 </head>
 <body>
