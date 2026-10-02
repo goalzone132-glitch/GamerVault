@@ -77,6 +77,23 @@ textarea:focus{border-color:var(--cy);box-shadow:0 0 0 3px #22e5ff22,0 0 16px #2
 @keyframes up{from{transform:translateY(30px);opacity:0}to{transform:none;opacity:1}}
 @media(min-width:560px){.pgrid,.meta{grid-template-columns:1fr 1fr}.ov{align-items:center}.sheet{border-radius:18px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+/* ১. প্লাস (FAB) বাটনকে ব্যানার অ্যাডের উপরে তোলা */
+.fab, #fab, [class*="fab"], [class*="add"] {
+  bottom: 75px !important; /* ব্যানার অ্যাডের উচ্চতার উপরে ফিক্স করার জন্য */
+}
+
+/* ২. মোডাল বা পপআপ বক্সকে ওপরে তুলে বাটন দৃশ্যমান করা */
+.modal, .dialog, [class*="modal"], [class*="dialog"] {
+  margin-bottom: 70px !important;
+}
+
+/* ৩. মোডালের ভেতরে যেন স্ক্রোল করে Create squad বাটন দেখা যায় */
+.modal-content, [class*="modal-card"] {
+  max-height: 80vh !important;
+  overflow-y: auto !important;
+  padding-bottom: 20px !important;
+}
+    
 </style>
 </head>
 <body>
