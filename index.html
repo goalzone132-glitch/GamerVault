@@ -399,70 +399,7 @@ $('#q').oninput=function(e){query=e.target.value;render();};
 render();
 })();
 </script>
-    <!-- Social Bar Ad Script -->
-<script src="https://www.profitableratecpmnetwork.com/ehyu91qb?key=72ea723fa3e31ea9118eeac1efbb3f27"></script>
-  <!-- Custom Full-screen Interstitial Modal -->
-<div id="fullScreenAdModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.95); z-index:999999; text-align:center; flex-direction:column; justify-content:center; align-items:center; color:#fff;">
   
-  <!-- Skip Button / Timer -->
-  <div style="position:absolute; top:20px; right:20px;">
-    <button id="skipAdBtn" disabled style="background:#ff4757; color:#fff; border:none; padding:10px 20px; font-size:16px; font-weight:bold; border-radius:5px; cursor:not-allowed; opacity:0.6;">
-      Wait <span id="adTimer">5</span>s
-    </button>
-  </div>
-
-  <!-- Ad Banner / Direct Link Container -->
-  <div style="max-width:90%; background:#1e1e2e; padding:30px; border-radius:12px; border:1px solid #333; box-shadow:0 0 20px rgba(0,0,0,0.8);">
-    <h3 style="margin-bottom:15px; color:#f1c40f;">Sponsored Content</h3>
-    <p style="margin-bottom:20px; color:#ccc;">Click below to visit our sponsor and support GamerVault!</p>
-    
-    <a href="https://www.profitableratecpmnetwork.com/ehyu91qb?key=72ea723fa3e31ea9118eeac1efbb3f27" target="_blank" onclick="closeAdModal()" style="display:inline-block; background:#2ed573; color:#fff; text-decoration:none; padding:14px 28px; font-size:18px; font-weight:bold; border-radius:8px;">
-      🚀 Open Special Offer
-    </a>
-  </div>
-</div>
-
-<script>
-  function showFullScreenAd() {
-    const modal = document.getElementById('fullScreenAdModal');
-    const skipBtn = document.getElementById('skipAdBtn');
-    const timerSpan = document.getElementById('adTimer');
-    
-    modal.style.display = 'flex';
-    let timeLeft = 5;
-
-    const countdown = setInterval(() => {
-      timeLeft--;
-      if (timeLeft > 0) {
-        timerSpan.innerText = timeLeft;
-      } else {
-        clearInterval(countdown);
-        skipBtn.innerText = "❌ Close / Skip";
-        skipBtn.style.cursor = "pointer";
-        skipBtn.style.opacity = "1";
-        skipBtn.disabled = false;
-        skipBtn.onclick = closeAdModal;
-      }
-    }, 1000);
-  }
-
-  function closeAdModal() {
-    document.getElementById('fullScreenAdModal').style.display = 'none';
-  }
-
-  // ক্রিয়েট স্কোয়াড বা যেকোনো বাটনে ক্লিক করলে ৫ সেকেন্ডের ফুল স্ক্রিন অ্যাডটি দেখাবে
-  document.addEventListener('DOMContentLoaded', function() {
-    document.addEventListener('click', function(e) {
-      const target = e.target;
-      if (
-        target.matches('button[type="submit"]') || 
-        (target.innerText && target.innerText.toLowerCase().includes('create squad'))
-      ) {
-        showFullScreenAd();
-      }
-    });
-  });
-</script>
 </div>
 </script>
 </body>
