@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Download, Upload, X } from 'lucide-react';
+import { Download, FileCode, Upload, X } from 'lucide-react';
 import {
   POPULAR_GAMES,
   Squad,
@@ -12,6 +12,7 @@ import {
   generateSquadId,
   sanitizeSquad,
 } from '../utils/storage';
+import { generateStandaloneHtml } from '../utils/standaloneHtml';
 
 interface NewSquadModalProps {
   defaultGame: string;
@@ -192,7 +193,7 @@ export const BackupModal: React.FC<BackupModalProps> = ({
   onClose,
   onToast,
 }) => {
-  const [tab, setTab] = useState<'export' | 'import'>('export');
+  const [tab, setTab] = useState<'export' | 'import' | 'github'>('github');
   const [importText, setImportText] = useState('');
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -206,6 +207,25 @@ export const BackupModal: React.FC<BackupModalProps> = ({
     null,
     2
   );
+
+  const standaloneHtml = generateStandaloneHtml(squads);
+
+  const handleDownloadStandaloneHtml = () => {
+    try {
+      const blob = new Blob([standaloneHtml], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'index.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.setTimeout(() => URL.revokeObjectURL(url), 4000);
+      onToast('Downloaded standalone index.html for GitHub!');
+    } catch {
+      onToast('Download blocked. Use Copy HTML Code instead.', true);
+    }
+  };
 
   const handleDownloadFile = () => {
     if (!squads.length) {
@@ -287,7 +307,18 @@ export const BackupModal: React.FC<BackupModalProps> = ({
         </div>
 
         {/* Segmented Switcher */}
-        <div className="grid grid-cols-2 gap-1 p-1 bg-[#090d16] border border-slate-800 rounded-xl">
+        <div className="grid grid-cols-3 gap-1 p-1 bg-[#090d16] border border-slate-800 rounded-xl">
+          <button
+            type="button"
+            onClick={() => setTab('github')}
+            className={`min-h-[40px] rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
+              tab === 'github'
+                ? 'bg-slate-800 text-cyan-300'
+                : 'text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            GitHub HTML
+          </button>
           <button
             type="button"
             onClick={() => setTab('export')}
@@ -297,7 +328,7 @@ export const BackupModal: React.FC<BackupModalProps> = ({
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
-            Export Backup ({squads.length})
+            Export JSON
           </button>
           <button
             type="button"
@@ -308,11 +339,52 @@ export const BackupModal: React.FC<BackupModalProps> = ({
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
-            Import / Restore
+            Import JSON
           </button>
         </div>
 
-        {tab === 'export' ? (
+        {tab === 'github' ? (
+          <div className="space-y-3">
+            <p className="text-xs text-slate-300 leading-relaxed">
+              Directly uploading to GitHub Pages? Download this single{' '}
+              <span className="font-mono text-cyan-300">index.html</span> file (or copy
+              its code). It works 100% standalone on GitHub Pages and mobile browsers
+              with zero white screen.
+            </p>
+            <textarea
+              readOnly
+              rows={6}
+              value={standaloneHtml}
+              aria-label="Standalone GitHub index.html code"
+              className="w-full bg-[#090d16] border border-slate-800 rounded-xl p-3 font-mono text-xs text-slate-300 focus:outline-none"
+            />
+            <div className="flex flex-wrap items-center gap-2.5">
+              <button
+                type="button"
+                onClick={handleDownloadStandaloneHtml}
+                className="flex-1 inline-flex items-center justify-center gap-2 min-h-[44px] px-4 py-2 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-sm font-semibold cursor-pointer whitespace-nowrap"
+              >
+                <FileCode className="w-4 h-4" />
+                <span>Download index.html</span>
+              </button>
+              <button
+                type="button"
+                onClick={async () => {
+                  const ok = await copyToClipboard(standaloneHtml);
+                  onToast(
+                    ok
+                      ? 'Complete index.html code copied! Paste into GitHub.'
+                      : 'Copy blocked. Select the text above manually.',
+                    !ok
+                  );
+                }}
+                className="inline-flex items-center justify-center gap-2 min-h-[44px] px-4 py-2 rounded-lg border border-slate-700 bg-slate-800 hover:bg-slate-700 text-sm font-medium text-slate-100 cursor-pointer whitespace-nowrap"
+              >
+                <span>Copy HTML Code</span>
+              </button>
+            </div>
+          </div>
+        ) : tab === 'export' ? (
           <div className="space-y-3">
             <p className="text-xs text-slate-400">
               Copy this backup JSON code to keep in WhatsApp/Notes or download it as a{' '}

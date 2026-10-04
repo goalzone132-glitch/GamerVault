@@ -264,7 +264,7 @@ export default function App() {
               className="inline-flex items-center justify-center gap-1.5 min-h-[40px] px-3.5 py-2 rounded-lg border border-slate-800 bg-slate-900/90 hover:bg-slate-800 hover:border-slate-700 text-xs font-medium text-slate-200 transition-colors cursor-pointer whitespace-nowrap shrink-0"
             >
               <Database className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Backup / Import</span>
+              <span>GitHub HTML / Backup</span>
             </button>
 
             <button

@@ -13,10 +13,300 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@600;700&display=swap" rel="stylesheet" />
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        background-color: #090d16;
+        color: #f1f5f9;
+        font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      }
+    </style>
   </head>
   <body class="bg-[#090d16] text-slate-100 antialiased selection:bg-cyan-500/30 selection:text-cyan-200">
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="./src/main.tsx"></script>
+
+    <!-- GitHub Direct-Open / Unbuilt Branch Fallback: Ensures index.html works even if opened without a Vite build step -->
+    <script>
+      (function () {
+        function bootStandaloneIfNeeded() {
+          var root = document.getElementById('root');
+          if (window.__GAMERVAULT_REACT_MOUNTED__ || (root && root.children.length > 0)) {
+            return;
+          }
+          if (!root) return;
+
+          var style = document.createElement('style');
+          style.textContent = [
+            ':root{--bg:#090d16;--panel:#101626;--panel2:#161f35;--line:#1e293b;--cy:#22d3ee;--tx:#f1f5f9;--mu:#94a3b8;--red:#fb7185;color-scheme:dark}',
+            '*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}',
+            'body{padding-bottom:100px;background-color:#090d16;color:var(--tx)}',
+            '.gv-wrap{max-width:960px;margin:0 auto;padding:0 16px}',
+            '.gv-top{position:sticky;top:0;z-index:20;background:rgba(9,13,22,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}',
+            '.gv-top-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:60px;padding:10px 0}',
+            '.gv-brand{margin:0;font-size:20px;font-weight:700;color:var(--tx);text-decoration:none;font-family:"Syne",sans-serif}',
+            '.gv-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}',
+            '.gv-hero{padding:20px 0 14px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px}',
+            '.gv-hero h1{margin:0;font-size:24px;line-height:1.2;font-family:"Syne",sans-serif}',
+            '#gv-count{margin:4px 0 0;color:var(--mu);font-size:13px;font-family:"JetBrains Mono",monospace}',
+            '.gv-search{position:relative;width:100%;max-width:340px}',
+            '.gv-search span{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--mu);display:flex;pointer-events:none}',
+            '.gv-search input{padding-left:38px}',
+            '.gv-root input,.gv-root select,.gv-root textarea{width:100%;min-width:0;background:#090d16;border:1px solid var(--line);color:var(--tx);border-radius:10px;padding:10px 12px;font:inherit;font-size:15px;outline:none}',
+            '.gv-root input:focus,.gv-root select:focus,.gv-root textarea:focus{border-color:var(--cy)}',
+            '.gv-mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}',
+            '.gv-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:42px;padding:8px 14px;border:1px solid var(--line);background:var(--panel2);color:var(--tx);border-radius:10px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}',
+            '.gv-btn.pri{background:var(--cy);color:#020617;border-color:transparent;font-weight:700}',
+            '.gv-btn.danger{color:var(--red);border-color:rgba(251,113,133,0.3);background:rgba(251,113,133,0.1)}',
+            '#gv-list{display:grid;gap:16px;padding-top:18px}',
+            '.gv-card{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden}',
+            '.gv-head{display:flex;gap:10px;align-items:center;padding:16px;border-bottom:1px solid var(--line)}',
+            '.gv-head-main{flex:1;min-width:0}',
+            '.gv-name{font-size:18px;font-weight:700;background:transparent!important;border:0!important;padding:2px 0!important}',
+            '.gv-meta{font-size:12px;color:var(--mu);margin-top:4px;font-family:"JetBrains Mono",monospace}',
+            '.gv-meta b{color:var(--cy)}',
+            '.gv-icon{flex:none;width:42px;height:42px;border-radius:10px;border:1px solid var(--line);background:#090d16;color:var(--mu);display:grid;place-items:center;cursor:pointer}',
+            '.collapsed .gv-icon svg{transform:rotate(-90deg)}',
+            '.collapsed .gv-body{display:none}',
+            '.gv-cfg{padding:16px;background:#0c101d;border-bottom:1px solid var(--line);display:grid;gap:12px}',
+            '.gv-player{padding:16px;border-bottom:1px solid var(--line);display:grid;gap:12px}',
+            '.gv-phead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px}',
+            '.gv-plabel{background:transparent!important;border:0!important;border-bottom:1px dashed rgba(34,211,238,0.4)!important;border-radius:0!important;padding:4px 2px!important;color:var(--cy)!important;font-weight:700;font-size:15px;max-width:240px}',
+            '.gv-pgrid{display:grid;gap:10px}',
+            '.gv-field label{display:block;font-size:12px;color:var(--mu);margin:0 0 4px 2px}',
+            '.gv-row{display:flex;gap:8px}',
+            '.gv-copy{flex:none;width:42px;height:42px;border-radius:10px;border:1px solid rgba(34,211,238,0.35);background:rgba(34,211,238,0.1);color:var(--cy);display:grid;place-items:center;cursor:pointer}',
+            '.gv-copy.done{background:var(--cy);color:#020617;border-color:var(--cy)}',
+            '.gv-paste{padding:12px;border-radius:12px;background:#090d16;border:1px solid rgba(34,211,238,0.4);display:grid;gap:8px}',
+            '.gv-foot{padding:16px;background:#0c101d;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}',
+            '.gv-foot-left{display:flex;flex-wrap:wrap;gap:8px}',
+            '.gv-empty{text-align:center;color:var(--mu);padding:48px 20px;border:1px dashed var(--line);border-radius:16px;background:var(--panel)}',
+            '#gv-toast{position:fixed;left:50%;bottom:28px;z-index:60;transform:translate(-50%,12px);opacity:0;pointer-events:none;background:var(--panel);color:var(--tx);border:1px solid var(--cy);border-radius:12px;padding:10px 16px;font-weight:600;font-size:13px;transition:opacity .15s,transform .15s;max-width:90vw;text-align:center}',
+            '#gv-toast.show{opacity:1;transform:translate(-50%,0)}',
+            '#gv-toast.warn{border-color:var(--red);color:#fecdd3}',
+            '.gv-ov{position:fixed;inset:0;z-index:50;background:rgba(2,6,23,0.78);display:flex;align-items:flex-end;justify-content:center;padding:0}',
+            '.gv-ov[hidden]{display:none}',
+            '.gv-sheet{width:100%;max-width:500px;background:var(--panel);border:1px solid var(--line);border-radius:20px 20px 0 0;padding:20px;display:grid;gap:14px}',
+            '.gv-sheet h2{margin:0;font-size:18px}',
+            '.gv-sheet p{margin:0;color:var(--mu);font-size:13px}',
+            '.gv-acts{display:flex;gap:8px;flex-wrap:wrap}.gv-acts .gv-btn{flex:1}',
+            '.gv-seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}',
+            '.gv-seg button{min-height:42px;border:1px solid var(--line);background:#090d16;color:var(--mu);border-radius:10px;font:inherit;font-size:12px;font-weight:600;cursor:pointer}',
+            '.gv-seg button[aria-pressed=true]{color:var(--cy);border-color:var(--cy);background:rgba(34,211,238,0.12)}',
+            '@media(min-width:640px){.gv-cfg{grid-template-columns:repeat(3,1fr)}.gv-pgrid{grid-template-columns:repeat(3,1fr)}.gv-pgrid .span2{grid-column:span 2}.gv-ov{align-items:center;padding:16px}.gv-sheet{border-radius:18px}}'
+          ].join('\n');
+          document.head.appendChild(style);
+
+          root.className = 'gv-root';
+          root.innerHTML = [
+            '<header class="gv-top"><div class="gv-wrap gv-top-inner">',
+            '<a href="#top" class="gv-brand">GamerVault</a>',
+            '<div class="gv-actions">',
+            '<button class="gv-btn" id="gv-exp" type="button">Export</button>',
+            '<button class="gv-btn" id="gv-imp" type="button">Import</button>',
+            '<button class="gv-btn pri" id="gv-add" type="button">+ New Squad</button>',
+            '<input type="file" id="gv-file" accept=".json,application/json" hidden>',
+            '</div></div></header>',
+            '<div class="gv-wrap"><section class="gv-hero"><div><h1>Esports Squad &amp; Roster Vault</h1><p id="gv-count"></p></div>',
+            '<div class="gv-search"><span id="gv-sic"></span><input id="gv-q" type="search" placeholder="Search squad, IGN, UID, phone, mail..." autocomplete="off"></div></section>',
+            '<main id="gv-list"></main></div>',
+            '<div id="gv-toast" role="status" aria-live="polite"></div>',
+            '<div class="gv-ov" id="gv-ov" hidden></div>',
+            '<datalist id="gv-games"><option value="Free Fire MAX"><option value="Free Fire"><option value="PUBG Mobile"><option value="BGMI"><option value="Valorant"><option value="COD Mobile"><option value="Mobile Legends"><option value="eFootball"></datalist>'
+          ].join('');
+
+          var KEY='gamervault.v1',SEED_KEY='gamervault.seeded.v1';
+          var SAMPLE=[{
+            id:'sq_sample_ff_1',name:'Phantom Strikers BD',tag:'PSX',game:'Free Fire MAX',mode:'squad5',collapsed:false,
+            players:[
+              {label:'Captain (IGL)',ign:'PSX•TANVIR',uid:'2849105732',phone:'01715-892341',email:'tanvir.igl@gmail.com',extra:'Discord: tanvir_psx'},
+              {label:'Player 2 (Rusher)',ign:'PSX•RAFIQ',uid:'5910284719',phone:'01842-661920',email:'rafiq.ffmax@gmail.com',extra:'Discord: rafiq99'},
+              {label:'Player 3 (Sniper)',ign:'PSX•NAIMUL',uid:'3847192045',phone:'01911-482910',email:'naimul.sniper@gmail.com',extra:'Discord: naimul_awm'},
+              {label:'Player 4 (Support)',ign:'PSX•SAJID',uid:'6728194012',phone:'01628-910443',email:'sajid.esports@gmail.com',extra:'Discord: sajid_sup'},
+              {label:'Substitute 1',ign:'PSX•MAHIN',uid:'7819204911',phone:'01533-772819',email:'mahin.sub@gmail.com',extra:'Sub / Entry'}
+            ]
+          }];
+          var MODES={solo:{n:1,label:'Solo (1)'},duo:{n:2,label:'Duo (2)'},squad4:{n:4,label:'Squad (4)'},squad5:{n:5,label:'Squad + Sub (5)'},squad6:{n:6,label:'Full Roster (6)'}};
+          var IC={
+            copy:'<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/>',
+            check:'<path d="M4 12l5 5 11-11"/>',
+            chev:'<path d="M6 9l6 6 6-6"/>',
+            trash:'<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',
+            search:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>'
+          };
+          function svg(n,s){s=s||18;return '<svg viewBox="0 0 24 24" width="'+s+'" height="'+s+'" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+IC[n]+'</svg>';}
+          function $(s){return document.querySelector(s);}
+          function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;}
+          function str(v){return typeof v==='string'?v.slice(0,300):typeof v==='number'?String(v):'';}
+          function newId(){return 'sq_'+Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
+          function defLabel(i){return i===0?'Captain (IGL)':i===4?'Substitute 1':i===5?'Substitute 2':'Player '+(i+1);}
+          function blank(i){return {label:defLabel(i),ign:'',uid:'',phone:'',email:'',extra:''};}
+          function mkPlayers(mode){var a=[];for(var i=0;i<MODES[mode].n;i++)a.push(blank(i));return a;}
+          function clean(s){
+            if(!s||typeof s!=='object')return null;
+            var ps=Array.isArray(s.players)?s.players.slice(0,6):[];
+            var mode=MODES[s.mode]?s.mode:'squad4';
+            var r={id:str(s.id)||newId(),name:str(s.name),tag:str(s.tag),game:str(s.game),mode:mode,collapsed:!!s.collapsed,players:[]};
+            for(var i=0;i<MODES[mode].n;i++){
+              var p=ps[i]&&typeof ps[i]==='object'?ps[i]:{};
+              var em=str(p.email),ex=str(p.extra);
+              if(!em&&ex.indexOf('@')>-1&&ex.indexOf(' ')===-1){em=ex;ex='';}
+              r.players.push({label:str(p.label)||defLabel(i),ign:str(p.ign),uid:str(p.uid),phone:str(p.phone),email:em,extra:ex});
+            }
+            return r;
+          }
+          function load(){
+            try{
+              var raw=localStorage.getItem(KEY);
+              if(raw){var d=JSON.parse(raw);if(Array.isArray(d))return d.map(clean).filter(Boolean);}
+              if(!localStorage.getItem(SEED_KEY)){localStorage.setItem(SEED_KEY,'1');localStorage.setItem(KEY,JSON.stringify(SAMPLE));return SAMPLE;}
+              return [];
+            }catch(e){return SAMPLE;}
+          }
+          var squads=load(),query='',fid=0,tmr=null,toastT=null,onClose=null;
+          function save(){try{localStorage.setItem(KEY,JSON.stringify(squads));localStorage.setItem(SEED_KEY,'1');}catch(e){}}
+          function saveSoon(){clearTimeout(tmr);tmr=setTimeout(save,200);}
+          function toast(m,warn){var t=$('#gv-toast');t.textContent=m;t.className='show'+(warn?' warn':'');clearTimeout(toastT);toastT=setTimeout(function(){t.className='';},1700);}
+          function copyText(t){
+            var p=(navigator.clipboard&&window.isSecureContext)?navigator.clipboard.writeText(t).then(function(){return true;},function(){return false;}):Promise.resolve(false);
+            return p.then(function(ok){
+              if(ok)return true;
+              var ta=document.createElement('textarea');ta.value=t;ta.setAttribute('readonly','');
+              ta.style.cssText='position:fixed;top:0;left:0;opacity:0;font-size:16px';
+              document.body.appendChild(ta);ta.select();ta.setSelectionRange(0,t.length);
+              var r=false;try{r=document.execCommand('copy');}catch(e){}
+              document.body.removeChild(ta);return r;
+            });
+          }
+          function copyBtn(get,msg){
+            var b=el('button','gv-copy');b.type='button';b.innerHTML=svg('copy');
+            b.onclick=function(){
+              var v=get().trim();
+              if(!v){toast('Nothing to copy yet',true);return;}
+              copyText(v).then(function(ok){
+                if(!ok){toast('Copy blocked',true);return;}
+                toast(msg);b.classList.add('done');b.innerHTML=svg('check');
+                clearTimeout(b._t);b._t=setTimeout(function(){b.classList.remove('done');b.innerHTML=svg('copy');},1100);
+              });
+            };
+            return b;
+          }
+          function modal(node){var o=$('#gv-ov');onClose=null;o.textContent='';o.appendChild(node);o.hidden=false;o.onclick=function(e){if(e.target===o)closeModal();};}
+          function closeModal(){var o=$('#gv-ov');o.hidden=true;o.textContent='';if(onClose){var f=onClose;onClose=null;f();}}
+          function field(label,val,set,o){
+            o=o||{};
+            var w=el('div','gv-field'+(o.span2?' span2':'')),l=el('label',null,label),r=el('div','gv-row'),i=el('input',o.mono?'gv-mono':''),id='gvf'+(++fid);
+            i.id=id;l.htmlFor=id;i.type=o.type||'text';i.value=val;i.placeholder=o.ph||'';i.autocomplete='off';
+            if(o.list)i.setAttribute('list',o.list);
+            i.addEventListener('input',function(){set(i.value);saveSoon();});
+            r.appendChild(i);
+            if(!o.nocopy)r.appendChild(copyBtn(function(){return i.value;},o.toast||label+' copied!'));
+            w.append(l,r);return w;
+          }
+          function squadText(s,onlyUid){
+            var tag=s.tag&&s.tag.trim()?' ['+s.tag.trim()+']':'';
+            var L=['Squad: '+(s.name.trim()||'Unnamed')+tag];
+            if(s.game.trim())L.push('Game: '+s.game.trim());
+            L.push('Mode: '+MODES[s.mode].label);
+            s.players.forEach(function(p,i){
+              var slot=p.label.trim()||defLabel(i);
+              if(onlyUid){L.push((i+1)+'. '+(p.ign.trim()||'—')+' | UID: '+(p.uid.trim()||'—')+' ('+slot+')');return;}
+              L.push('',slot);
+              [['IGN',p.ign],['UID',p.uid],['Phone',p.phone],['Email',p.email],['Info',p.extra]].forEach(function(x){
+                if(x[1]&&x[1].trim())L.push(x[0]+': '+x[1].trim());
+              });
+            });
+            return L.join('\n');
+          }
+          function resize(s){var n=MODES[s.mode].n;while(s.players.length<n)s.players.push(blank(s.players.length));s.players.length=n;}
+          function buildCard(s){
+            var c=el('article','gv-card'+(s.collapsed?' collapsed':''));
+            var h=el('div','gv-head'),hm=el('div','gv-head-main'),nm=el('input','gv-name'),metaLine=el('div','gv-meta');
+            nm.value=s.name;nm.placeholder='Squad Name';nm.oninput=function(){s.name=nm.value;saveSoon();};
+            function updMeta(){
+              var ready=s.players.filter(function(p){return p.ign||p.uid||p.phone||p.email;}).length;
+              metaLine.innerHTML='<b>'+(s.game.trim()||'No game set')+'</b>'+(s.tag&&s.tag.trim()?' · Tag: '+s.tag.trim():'')+' · '+MODES[s.mode].label+' · '+ready+'/'+s.players.length+' ready';
+            }
+            updMeta();hm.append(nm,metaLine);
+            var tg=el('button','gv-icon');tg.type='button';tg.innerHTML=svg('chev');
+            tg.onclick=function(){s.collapsed=!s.collapsed;c.classList.toggle('collapsed',s.collapsed);save();};
+            h.append(hm,copyBtn(function(){return nm.value;},'Squad name copied!'),tg);
+            var b=el('div','gv-body'),cfg=el('div','gv-cfg');
+            cfg.append(
+              field('Esports Title / Game',s.game,function(v){s.game=v;updMeta();},{ph:'Free Fire MAX, PUBG Mobile...',list:'gv-games',toast:'Game copied!'}),
+              field('Team / Clan Tag',s.tag||'',function(v){s.tag=v;updMeta();},{ph:'e.g., PSX',mono:true,toast:'Tag copied!'})
+            );
+            var mw=el('div','gv-field'),ml=el('label',null,'Roster Size'),sel=el('select');
+            Object.keys(MODES).forEach(function(k){var o=el('option',null,MODES[k].label);o.value=k;sel.appendChild(o);});
+            sel.value=s.mode;
+            sel.onchange=function(){s.mode=sel.value;resize(s);save();c.replaceWith(buildCard(s));};
+            mw.append(ml,sel);cfg.appendChild(mw);
+            var pl=el('div');
+            s.players.forEach(function(p,i){
+              var d=el('section','gv-player'),ph=el('div','gv-phead'),lab=el('input','gv-plabel'),g=el('div','gv-pgrid');
+              lab.value=p.label;lab.placeholder=defLabel(i);lab.oninput=function(){p.label=lab.value;saveSoon();};
+              ph.append(lab);
+              g.append(
+                field('In-Game Name (IGN)',p.ign,function(v){p.ign=v;updMeta();},{ph:'e.g., PSX•TANVIR',toast:'IGN copied!'}),
+                field('Game UID / Character ID',p.uid,function(v){p.uid=v;updMeta();},{ph:'e.g., 2849105732',mono:true,toast:'UID copied!'}),
+                field('WhatsApp / Phone Number',p.phone,function(v){p.phone=v;updMeta();},{type:'tel',ph:'e.g., 01715-892341',mono:true,toast:'Phone copied!'}),
+                field('Email / Gmail Address',p.email||'',function(v){p.email=v;updMeta();},{type:'email',ph:'e.g., player@gmail.com',toast:'Email copied!'}),
+                field('Discord / NID / Extra (Optional)',p.extra,function(v){p.extra=v;},{ph:'Discord, Real Name, NID...',span2:true,toast:'Info copied!'})
+              );
+              d.append(ph,g);pl.appendChild(d);
+            });
+            var f=el('div','gv-foot'),fl=el('div','gv-foot-left'),all=el('button','gv-btn pri','Copy All Squad Info'),uids=el('button','gv-btn','Copy IGNs & UIDs'),del=el('button','gv-btn danger','Delete Squad');
+            all.type=uids.type=del.type='button';
+            all.onclick=function(){copyText(squadText(s,false)).then(function(ok){toast(ok?'Squad info copied!':'Copy blocked',!ok);});};
+            uids.onclick=function(){copyText(squadText(s,true)).then(function(ok){toast(ok?'IGNs & UIDs copied!':'Copy blocked',!ok);});};
+            del.onclick=function(){squads=squads.filter(function(x){return x!==s;});save();render();toast('Squad deleted');};
+            fl.append(all,uids);f.append(fl,del);
+            b.append(cfg,pl,f);c.append(h,b);return c;
+          }
+          function render(){
+            var q=query.trim().toLowerCase(),list=$('#gv-list');list.textContent='';
+            var hit=squads.filter(function(s){
+              if(!q)return true;
+              var vals=[s.name,s.tag||'',s.game];
+              s.players.forEach(function(p){vals.push(p.label,p.ign,p.uid,p.phone,p.email||'',p.extra);});
+              return vals.some(function(v){return (v||'').toLowerCase().indexOf(q)>-1;});
+            });
+            $('#gv-count').textContent=squads.length+' squad'+(squads.length===1?'':'s')+' saved · 1-tap copy for IGN, UID, Phone & Email';
+            if(!squads.length)list.appendChild(el('div','gv-empty','No squads saved yet. Tap + New Squad to add your team roster.'));
+            else if(!hit.length)list.appendChild(el('div','gv-empty','No match found.'));
+            hit.forEach(function(s){list.appendChild(buildCard(s));});
+          }
+          $('#gv-sic').innerHTML=svg('search',16);
+          $('#gv-add').onclick=function(){
+            squads.unshift({id:newId(),name:'New Squad '+(squads.length+1),tag:'',game:'Free Fire MAX',mode:'squad4',collapsed:false,players:mkPlayers('squad4')});
+            save();render();toast('New squad added');
+          };
+          $('#gv-exp').onclick=function(){
+            var json=JSON.stringify({app:'GamerVault',version:1,squads:squads},null,2);
+            copyText(json).then(function(ok){toast(ok?'Backup JSON copied to clipboard!':'Copy blocked',!ok);});
+          };
+          $('#gv-imp').onclick=function(){$('#gv-file').click();};
+          $('#gv-file').onchange=function(e){
+            var f=e.target.files[0];if(!f)return;
+            var r=new FileReader();
+            r.onload=function(){
+              try{
+                var d=JSON.parse(r.result),arr=Array.isArray(d)?d:(d&&d.squads);
+                if(Array.isArray(arr)){squads=arr.map(clean).filter(Boolean);save();render();toast('Backup imported!');}
+              }catch(err){toast('Invalid backup file',true);}
+            };
+            r.readAsText(f);e.target.value='';
+          };
+          $('#gv-q').oninput=function(e){query=e.target.value;render();};
+          render();
+        }
+
+        window.addEventListener('load', function () {
+          setTimeout(bootStandaloneIfNeeded, 700);
+        });
+      })();
+    </script>
   </body>
 </html>
-
