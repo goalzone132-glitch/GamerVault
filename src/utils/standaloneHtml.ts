@@ -29,9 +29,9 @@ body{padding-bottom:100px}
 .hero-bar h1{margin:0;font-size:24px;line-height:1.2}
 #count{margin:4px 0 0;color:var(--mu);font-size:13px;font-family:ui-monospace,Consolas,monospace}
 .search{position:relative;width:100%;max-width:340px}
-.search span{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--mu);display:flex;pointer-events:none}
-.search input{padding-left:38px}
+.search span{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--mu);display:flex;pointer-events:none;z-index:2}
 input,select,textarea{width:100%;min-width:0;background:#090d16;border:1px solid var(--line);color:var(--tx);border-radius:10px;padding:10px 12px;font:inherit;font-size:15px;outline:none;transition:border-color .15s}
+.search input{padding-left:40px!important;background:var(--panel)}
 input::placeholder,textarea::placeholder{color:#475569}
 input:focus,select:focus,textarea:focus{border-color:var(--cy)}
 .mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-variant-numeric:tabular-nums}

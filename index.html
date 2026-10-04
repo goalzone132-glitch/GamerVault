@@ -28,7 +28,7 @@
     <div id="root"></div>
     <script type="module" src="./src/main.tsx"></script>
 
-    <!-- GitHub Direct-Open / Unbuilt Branch Fallback: Ensures index.html works even if opened without a Vite build step -->
+    <!-- GitHub Direct-Open / Unbuilt Branch Engine: Ensures index.html works with 100% of features when served directly from GitHub Pages main branch -->
     <script>
       (function () {
         function bootStandaloneIfNeeded() {
@@ -43,58 +43,70 @@
             ':root{--bg:#090d16;--panel:#101626;--panel2:#161f35;--line:#1e293b;--cy:#22d3ee;--tx:#f1f5f9;--mu:#94a3b8;--red:#fb7185;color-scheme:dark}',
             '*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}',
             'body{padding-bottom:100px;background-color:#090d16;color:var(--tx)}',
-            '.gv-wrap{max-width:960px;margin:0 auto;padding:0 16px}',
+            '.gv-wrap{max-width:1080px;margin:0 auto;padding:0 16px}',
             '.gv-top{position:sticky;top:0;z-index:20;background:rgba(9,13,22,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}',
             '.gv-top-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:60px;padding:10px 0}',
-            '.gv-brand{margin:0;font-size:20px;font-weight:700;color:var(--tx);text-decoration:none;font-family:"Syne",sans-serif}',
+            '.gv-brand{margin:0;font-size:20px;font-weight:700;color:var(--tx);text-decoration:none;font-family:"Syne",sans-serif;cursor:pointer}',
+            '.gv-nav{display:none;align-items:center;gap:22px}',
+            '.gv-nav button{background:transparent;border:0;border-bottom:2px solid transparent;color:var(--mu);font:inherit;font-size:14px;font-weight:500;padding:6px 0;cursor:pointer;white-space:nowrap}',
+            '.gv-nav button.active{color:var(--cy);border-bottom-color:var(--cy);font-weight:600}',
             '.gv-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}',
-            '.gv-hero{padding:20px 0 14px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px}',
-            '.gv-hero h1{margin:0;font-size:24px;line-height:1.2;font-family:"Syne",sans-serif}',
-            '#gv-count{margin:4px 0 0;color:var(--mu);font-size:13px;font-family:"JetBrains Mono",monospace}',
+            '.gv-hero{padding:22px 0 14px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px}',
+            '.gv-hero h1{margin:0;font-size:26px;line-height:1.2;font-family:"Syne",sans-serif}',
+            '#gv-count{margin:6px 0 0;color:var(--mu);font-size:13px;font-family:"JetBrains Mono",monospace}',
             '.gv-search{position:relative;width:100%;max-width:340px}',
-            '.gv-search span{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--mu);display:flex;pointer-events:none}',
-            '.gv-search input{padding-left:38px}',
-            '.gv-root input,.gv-root select,.gv-root textarea{width:100%;min-width:0;background:#090d16;border:1px solid var(--line);color:var(--tx);border-radius:10px;padding:10px 12px;font:inherit;font-size:15px;outline:none}',
+            '.gv-search span{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--mu);display:flex;pointer-events:none;z-index:2}',
+            '.gv-root input,.gv-root select,.gv-root textarea{width:100%;min-width:0;background:#090d16;border:1px solid var(--line);color:var(--tx);border-radius:10px;padding:10px 12px;font:inherit;font-size:14px;outline:none;transition:border-color .15s}',
+            '.gv-root .gv-search input{padding-left:40px!important;background:var(--panel)}',
             '.gv-root input:focus,.gv-root select:focus,.gv-root textarea:focus{border-color:var(--cy)}',
             '.gv-mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}',
-            '.gv-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:42px;padding:8px 14px;border:1px solid var(--line);background:var(--panel2);color:var(--tx);border-radius:10px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}',
+            '.gv-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:42px;padding:8px 14px;border:1px solid var(--line);background:var(--panel2);color:var(--tx);border-radius:10px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:border-color .15s,transform .1s}',
+            '.gv-btn:hover{border-color:var(--cy)}',
+            '.gv-btn:active{transform:scale(.98)}',
             '.gv-btn.pri{background:var(--cy);color:#020617;border-color:transparent;font-weight:700}',
             '.gv-btn.danger{color:var(--red);border-color:rgba(251,113,133,0.3);background:rgba(251,113,133,0.1)}',
             '#gv-list{display:grid;gap:16px;padding-top:18px}',
             '.gv-card{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden}',
-            '.gv-head{display:flex;gap:10px;align-items:center;padding:16px;border-bottom:1px solid var(--line)}',
+            '.gv-head{display:flex;gap:10px;align-items:center;padding:16px 20px;border-bottom:1px solid var(--line)}',
             '.gv-head-main{flex:1;min-width:0}',
-            '.gv-name{font-size:18px;font-weight:700;background:transparent!important;border:0!important;padding:2px 0!important}',
+            '.gv-name{font-size:18px!important;font-weight:700;background:transparent!important;border:0!important;padding:2px 0!important}',
             '.gv-meta{font-size:12px;color:var(--mu);margin-top:4px;font-family:"JetBrains Mono",monospace}',
-            '.gv-meta b{color:var(--cy)}',
+            '.gv-meta b{color:var(--cy);font-family:"Plus Jakarta Sans",sans-serif}',
             '.gv-icon{flex:none;width:42px;height:42px;border-radius:10px;border:1px solid var(--line);background:#090d16;color:var(--mu);display:grid;place-items:center;cursor:pointer}',
             '.collapsed .gv-icon svg{transform:rotate(-90deg)}',
             '.collapsed .gv-body{display:none}',
-            '.gv-cfg{padding:16px;background:#0c101d;border-bottom:1px solid var(--line);display:grid;gap:12px}',
-            '.gv-player{padding:16px;border-bottom:1px solid var(--line);display:grid;gap:12px}',
+            '.gv-cfg{padding:16px 20px;background:#0c101d;border-bottom:1px solid var(--line);display:grid;gap:12px}',
+            '.gv-player{padding:16px 20px;border-bottom:1px solid var(--line);display:grid;gap:12px}',
             '.gv-phead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px}',
-            '.gv-plabel{background:transparent!important;border:0!important;border-bottom:1px dashed rgba(34,211,238,0.4)!important;border-radius:0!important;padding:4px 2px!important;color:var(--cy)!important;font-weight:700;font-size:15px;max-width:240px}',
-            '.gv-pgrid{display:grid;gap:10px}',
-            '.gv-field label{display:block;font-size:12px;color:var(--mu);margin:0 0 4px 2px}',
+            '.gv-plabel{background:transparent!important;border:0!important;border-bottom:1px dashed rgba(34,211,238,0.4)!important;border-radius:0!important;padding:4px 2px!important;color:var(--cy)!important;font-weight:700;font-size:15px!important;max-width:240px}',
+            '.gv-pgrid{display:grid;gap:12px}',
+            '.gv-field label{display:block;font-size:12px;color:var(--mu);margin:0 0 5px 2px}',
             '.gv-row{display:flex;gap:8px}',
             '.gv-copy{flex:none;width:42px;height:42px;border-radius:10px;border:1px solid rgba(34,211,238,0.35);background:rgba(34,211,238,0.1);color:var(--cy);display:grid;place-items:center;cursor:pointer}',
             '.gv-copy.done{background:var(--cy);color:#020617;border-color:var(--cy)}',
             '.gv-paste{padding:12px;border-radius:12px;background:#090d16;border:1px solid rgba(34,211,238,0.4);display:grid;gap:8px}',
-            '.gv-foot{padding:16px;background:#0c101d;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}',
+            '.gv-foot{padding:16px 20px;background:#0c101d;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}',
             '.gv-foot-left{display:flex;flex-wrap:wrap;gap:8px}',
             '.gv-empty{text-align:center;color:var(--mu);padding:48px 20px;border:1px dashed var(--line);border-radius:16px;background:var(--panel)}',
-            '#gv-toast{position:fixed;left:50%;bottom:28px;z-index:60;transform:translate(-50%,12px);opacity:0;pointer-events:none;background:var(--panel);color:var(--tx);border:1px solid var(--cy);border-radius:12px;padding:10px 16px;font-weight:600;font-size:13px;transition:opacity .15s,transform .15s;max-width:90vw;text-align:center}',
+            '.gv-qcell{padding:12px;border-radius:12px;background:#090d16;border:1px solid var(--line);text-align:left;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;color:var(--tx)}',
+            '.gv-qcell:hover{border-color:var(--cy)}',
+            '.gv-qcell.done{border-color:#10b981;background:rgba(16,185,129,0.08)}',
+            '.gv-bnav{position:fixed;bottom:0;left:0;right:0;z-index:30;background:rgba(9,13,22,0.95);backdrop-filter:blur(10px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);height:56px;padding:0 8px}',
+            '.gv-bnav button{background:transparent;border:0;color:var(--mu);font:inherit;font-size:12px;font-weight:600;cursor:pointer}',
+            '.gv-bnav button.active{color:var(--cy)}',
+            '#gv-toast{position:fixed;left:50%;bottom:68px;z-index:60;transform:translate(-50%,12px);opacity:0;pointer-events:none;background:var(--panel);color:var(--tx);border:1px solid var(--cy);border-radius:12px;padding:10px 16px;font-weight:600;font-size:13px;transition:opacity .15s,transform .15s;max-width:90vw;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.6)}',
             '#gv-toast.show{opacity:1;transform:translate(-50%,0)}',
             '#gv-toast.warn{border-color:var(--red);color:#fecdd3}',
             '.gv-ov{position:fixed;inset:0;z-index:50;background:rgba(2,6,23,0.78);display:flex;align-items:flex-end;justify-content:center;padding:0}',
             '.gv-ov[hidden]{display:none}',
-            '.gv-sheet{width:100%;max-width:500px;background:var(--panel);border:1px solid var(--line);border-radius:20px 20px 0 0;padding:20px;display:grid;gap:14px}',
-            '.gv-sheet h2{margin:0;font-size:18px}',
+            '.gv-sheet{width:100%;max-width:500px;background:var(--panel);border:1px solid var(--line);border-radius:20px 20px 0 0;padding:22px;display:grid;gap:14px}',
+            '.gv-sheet h2{margin:0;font-size:18px;font-family:"Syne",sans-serif}',
             '.gv-sheet p{margin:0;color:var(--mu);font-size:13px}',
             '.gv-acts{display:flex;gap:8px;flex-wrap:wrap}.gv-acts .gv-btn{flex:1}',
             '.gv-seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}',
             '.gv-seg button{min-height:42px;border:1px solid var(--line);background:#090d16;color:var(--mu);border-radius:10px;font:inherit;font-size:12px;font-weight:600;cursor:pointer}',
             '.gv-seg button[aria-pressed=true]{color:var(--cy);border-color:var(--cy);background:rgba(34,211,238,0.12)}',
+            '@media(min-width:768px){.gv-nav{display:flex}.gv-bnav{display:none}#gv-toast{bottom:28px}}',
             '@media(min-width:640px){.gv-cfg{grid-template-columns:repeat(3,1fr)}.gv-pgrid{grid-template-columns:repeat(3,1fr)}.gv-pgrid .span2{grid-column:span 2}.gv-ov{align-items:center;padding:16px}.gv-sheet{border-radius:18px}}'
           ].join('\n');
           document.head.appendChild(style);
@@ -102,16 +114,26 @@
           root.className = 'gv-root';
           root.innerHTML = [
             '<header class="gv-top"><div class="gv-wrap gv-top-inner">',
-            '<a href="#top" class="gv-brand">GamerVault</a>',
+            '<a class="gv-brand" id="gv-home">GamerVault</a>',
+            '<nav class="gv-nav" id="gv-nav">',
+            '<button type="button" data-tab="squads" class="active">Squad Vault</button>',
+            '<button type="button" data-tab="quickfill">Tournament Quick-Fill</button>',
+            '<button type="button" data-tab="format">Format Studio</button>',
+            '</nav>',
             '<div class="gv-actions">',
             '<button class="gv-btn" id="gv-exp" type="button">Export</button>',
             '<button class="gv-btn" id="gv-imp" type="button">Import</button>',
             '<button class="gv-btn pri" id="gv-add" type="button">+ New Squad</button>',
             '<input type="file" id="gv-file" accept=".json,application/json" hidden>',
             '</div></div></header>',
-            '<div class="gv-wrap"><section class="gv-hero"><div><h1>Esports Squad &amp; Roster Vault</h1><p id="gv-count"></p></div>',
-            '<div class="gv-search"><span id="gv-sic"></span><input id="gv-q" type="search" placeholder="Search squad, IGN, UID, phone, mail..." autocomplete="off"></div></section>',
+            '<div class="gv-wrap"><section class="gv-hero"><div><h1 id="gv-title">Esports Squad &amp; Roster Vault</h1><p id="gv-count"></p></div>',
+            '<div class="gv-search" id="gv-sbox"><span id="gv-sic"></span><input id="gv-q" type="search" placeholder="Search squad, IGN, UID, phone, mail..." autocomplete="off"></div></section>',
             '<main id="gv-list"></main></div>',
+            '<nav class="gv-bnav" id="gv-bnav">',
+            '<button type="button" data-tab="squads" class="active">Squad Vault</button>',
+            '<button type="button" data-tab="quickfill">Quick-Fill</button>',
+            '<button type="button" data-tab="format">Format Studio</button>',
+            '</nav>',
             '<div id="gv-toast" role="status" aria-live="polite"></div>',
             '<div class="gv-ov" id="gv-ov" hidden></div>',
             '<datalist id="gv-games"><option value="Free Fire MAX"><option value="Free Fire"><option value="PUBG Mobile"><option value="BGMI"><option value="Valorant"><option value="COD Mobile"><option value="Mobile Legends"><option value="eFootball"></datalist>'
@@ -165,7 +187,7 @@
               return [];
             }catch(e){return SAMPLE;}
           }
-          var squads=load(),query='',fid=0,tmr=null,toastT=null,onClose=null;
+          var squads=load(),tab='squads',selSquadId=squads[0]?squads[0].id:'',query='',fid=0,tmr=null,toastT=null,onClose=null,copiedMap={};
           function save(){try{localStorage.setItem(KEY,JSON.stringify(squads));localStorage.setItem(SEED_KEY,'1');}catch(e){}}
           function saveSoon(){clearTimeout(tmr);tmr=setTimeout(save,200);}
           function toast(m,warn){var t=$('#gv-toast');t.textContent=m;t.className='show'+(warn?' warn':'');clearTimeout(toastT);toastT=setTimeout(function(){t.className='';},1700);}
@@ -181,7 +203,7 @@
             });
           }
           function copyBtn(get,msg){
-            var b=el('button','gv-copy');b.type='button';b.innerHTML=svg('copy');
+            var b=el('button','gv-copy');b.type='button';b.innerHTML=svg('copy');b.title='Copy '+msg.replace(' copied!','');
             b.onclick=function(){
               var v=get().trim();
               if(!v){toast('Nothing to copy yet',true);return;}
@@ -195,24 +217,67 @@
           }
           function modal(node){var o=$('#gv-ov');onClose=null;o.textContent='';o.appendChild(node);o.hidden=false;o.onclick=function(e){if(e.target===o)closeModal();};}
           function closeModal(){var o=$('#gv-ov');o.hidden=true;o.textContent='';if(onClose){var f=onClose;onClose=null;f();}}
+          document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!$('#gv-ov').hidden)closeModal();});
+          function ask(msg,okLabel){
+            return new Promise(function(res){
+              var s=el('div','gv-sheet'),a=el('div','gv-acts'),no=el('button','gv-btn','Cancel'),ok=el('button','gv-btn danger',okLabel);
+              no.type=ok.type='button';
+              s.append(el('h2',null,'Confirm Action'),el('p',null,msg));
+              no.onclick=closeModal;
+              ok.onclick=function(){onClose=null;closeModal();res(true);};
+              a.append(no,ok);s.appendChild(a);modal(s);onClose=function(){res(false);};
+            });
+          }
           function field(label,val,set,o){
             o=o||{};
             var w=el('div','gv-field'+(o.span2?' span2':'')),l=el('label',null,label),r=el('div','gv-row'),i=el('input',o.mono?'gv-mono':''),id='gvf'+(++fid);
-            i.id=id;l.htmlFor=id;i.type=o.type||'text';i.value=val;i.placeholder=o.ph||'';i.autocomplete='off';
+            i.id=id;l.htmlFor=id;i.type=o.type||'text';i.value=val;i.placeholder=o.ph||'';i.autocomplete='off';i.spellcheck=false;
             if(o.list)i.setAttribute('list',o.list);
             i.addEventListener('input',function(){set(i.value);saveSoon();});
             r.appendChild(i);
             if(!o.nocopy)r.appendChild(copyBtn(function(){return i.value;},o.toast||label+' copied!'));
             w.append(l,r);return w;
           }
-          function squadText(s,onlyUid){
+          function parseMsg(raw){
+            var res={},lines=raw.split(/\r?\n|,|;/).map(function(x){return x.trim();}).filter(Boolean);
+            lines.forEach(function(line){
+              var m=line.match(/^([a-zA-Z\s\-_/]+)\s*[:=-]\s*(.+)$/);
+              if(m){
+                var k=m[1].trim().toLowerCase(),v=m[2].trim();
+                if(!v)return;
+                if(k.indexOf('ign')>-1||k.indexOf('game')>-1||k==='name'){res.ign=v;return;}
+                if((k.indexOf('uid')>-1||k.indexOf('id')>-1)&&k.indexOf('discord')===-1&&k.indexOf('nid')===-1){res.uid=v;return;}
+                if(k.indexOf('phone')>-1||k.indexOf('wa')>-1||k.indexOf('whatsapp')>-1||k.indexOf('num')>-1){res.phone=v;return;}
+                if(k.indexOf('mail')>-1){res.email=v;return;}
+                res.extra=res.extra?(res.extra+' | '+m[1].trim()+': '+v):(m[1].trim()+': '+v);return;
+              }
+              var em=line.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
+              if(em&&!res.email)res.email=em[0];
+              var ph=line.match(/(?:\+?880|0)1[3-9]\d{2}[-\s]?\d{6}\b|\+\d{10,14}\b/);
+              if(ph&&!res.phone)res.phone=ph[0];
+              var dg=line.match(/\b\d{7,13}\b/g);
+              if(dg){dg.forEach(function(d){var cp=(res.phone||'').replace(/\D/g,'');if(d!==cp&&!res.uid)res.uid=d;});}
+              if(!res.ign&&!em&&!ph&&!/^\d+$/.test(line)&&line.length>=2&&line.length<=32)res.ign=line;
+            });
+            return res;
+          }
+          function squadText(s,preset){
             var tag=s.tag&&s.tag.trim()?' ['+s.tag.trim()+']':'';
             var L=['Squad: '+(s.name.trim()||'Unnamed')+tag];
             if(s.game.trim())L.push('Game: '+s.game.trim());
             L.push('Mode: '+MODES[s.mode].label);
             s.players.forEach(function(p,i){
               var slot=p.label.trim()||defLabel(i);
-              if(onlyUid){L.push((i+1)+'. '+(p.ign.trim()||'—')+' | UID: '+(p.uid.trim()||'—')+' ('+slot+')');return;}
+              if(preset==='uids'){L.push((i+1)+'. '+(p.ign.trim()||'—')+' | UID: '+(p.uid.trim()||'—')+' ('+slot+')');return;}
+              if(preset==='discord'){
+                L.push('','**'+(i+1)+'. '+slot+'**');
+                if(p.ign.trim())L.push('> IGN: `'+p.ign.trim()+'`');
+                if(p.uid.trim())L.push('> UID: `'+p.uid.trim()+'`');
+                if(p.phone.trim())L.push('> Phone: `'+p.phone.trim()+'`');
+                if(p.email&&p.email.trim())L.push('> Email: `'+p.email.trim()+'`');
+                if(p.extra.trim())L.push('> Info: '+p.extra.trim());
+                return;
+              }
               L.push('',slot);
               [['IGN',p.ign],['UID',p.uid],['Phone',p.phone],['Email',p.email],['Info',p.extra]].forEach(function(x){
                 if(x[1]&&x[1].trim())L.push(x[0]+': '+x[1].trim());
@@ -230,24 +295,55 @@
               metaLine.innerHTML='<b>'+(s.game.trim()||'No game set')+'</b>'+(s.tag&&s.tag.trim()?' · Tag: '+s.tag.trim():'')+' · '+MODES[s.mode].label+' · '+ready+'/'+s.players.length+' ready';
             }
             updMeta();hm.append(nm,metaLine);
+            var qfBtn=el('button','gv-btn','Quick-Fill');qfBtn.type='button';
+            qfBtn.onclick=function(){selSquadId=s.id;switchTab('quickfill');};
             var tg=el('button','gv-icon');tg.type='button';tg.innerHTML=svg('chev');
             tg.onclick=function(){s.collapsed=!s.collapsed;c.classList.toggle('collapsed',s.collapsed);save();};
-            h.append(hm,copyBtn(function(){return nm.value;},'Squad name copied!'),tg);
+            h.append(hm,copyBtn(function(){return nm.value;},'Squad name copied!'),qfBtn,tg);
+
             var b=el('div','gv-body'),cfg=el('div','gv-cfg');
             cfg.append(
               field('Esports Title / Game',s.game,function(v){s.game=v;updMeta();},{ph:'Free Fire MAX, PUBG Mobile...',list:'gv-games',toast:'Game copied!'}),
-              field('Team / Clan Tag',s.tag||'',function(v){s.tag=v;updMeta();},{ph:'e.g., PSX',mono:true,toast:'Tag copied!'})
+              field('Team / Clan Tag',s.tag||'',function(v){s.tag=v;updMeta();},{ph:'e.g., PSX, TX',mono:true,toast:'Tag copied!'})
             );
-            var mw=el('div','gv-field'),ml=el('label',null,'Roster Size'),sel=el('select');
+            var mw=el('div','gv-field'),ml=el('label',null,'Tournament Roster Size'),sel=el('select');
             Object.keys(MODES).forEach(function(k){var o=el('option',null,MODES[k].label);o.value=k;sel.appendChild(o);});
             sel.value=s.mode;
-            sel.onchange=function(){s.mode=sel.value;resize(s);save();c.replaceWith(buildCard(s));};
+            sel.onchange=function(){
+              var n=MODES[sel.value].n,lost=s.players.slice(n).filter(function(p){return p.ign||p.uid||p.phone||p.email||p.extra;}).length;
+              function apply(){s.mode=sel.value;resize(s);save();c.replaceWith(buildCard(s));}
+              if(!lost){apply();return;}
+              ask('Switching to '+MODES[sel.value].label+' removes '+lost+' filled player slot'+(lost>1?'s':'')+'.','Remove Slots').then(function(ok){if(ok)apply();else sel.value=s.mode;});
+            };
             mw.append(ml,sel);cfg.appendChild(mw);
+
             var pl=el('div');
             s.players.forEach(function(p,i){
-              var d=el('section','gv-player'),ph=el('div','gv-phead'),lab=el('input','gv-plabel'),g=el('div','gv-pgrid');
+              var d=el('section','gv-player'),ph=el('div','gv-phead'),lab=el('input','gv-plabel'),acts=el('div','gv-foot-left'),g=el('div','gv-pgrid');
               lab.value=p.label;lab.placeholder=defLabel(i);lab.oninput=function(){p.label=lab.value;saveSoon();};
-              ph.append(lab);
+              var pb=el('button','gv-btn','Smart Paste Message');pb.type='button';
+              var cpPlayer=el('button','gv-btn','Copy Player');cpPlayer.type='button';
+              cpPlayer.onclick=function(){
+                var txt=[p.label||defLabel(i),p.ign?'IGN: '+p.ign:'',p.uid?'UID: '+p.uid:'',p.phone?'Phone: '+p.phone:'',p.email?'Email: '+p.email:'',p.extra?'Info: '+p.extra:''].filter(Boolean).join('\n');
+                copyText(txt).then(function(ok){toast(ok?(p.label||defLabel(i))+' copied!':'Copy blocked',!ok);});
+              };
+              var pbox=el('div','gv-paste');pbox.hidden=true;
+              var pta=el('textarea','gv-mono');pta.rows=2;pta.placeholder='Paste teammate WhatsApp/Discord message (IGN, UID, Phone, Mail)...';
+              var pgo=el('button','gv-btn pri','Extract & Fill Fields');pgo.type='button';
+              pb.onclick=function(){pbox.hidden=!pbox.hidden;};
+              pgo.onclick=function(){
+                if(!pta.value.trim()){toast('Paste message first',true);return;}
+                var got=parseMsg(pta.value);
+                if(got.ign)p.ign=got.ign;
+                if(got.uid)p.uid=got.uid;
+                if(got.phone)p.phone=got.phone;
+                if(got.email)p.email=got.email;
+                if(got.extra)p.extra=got.extra;
+                save();c.replaceWith(buildCard(s));toast('Player fields auto-filled!');
+              };
+              pbox.append(pta,pgo);
+              acts.append(pb,cpPlayer);
+              ph.append(lab,acts);
               g.append(
                 field('In-Game Name (IGN)',p.ign,function(v){p.ign=v;updMeta();},{ph:'e.g., PSX•TANVIR',toast:'IGN copied!'}),
                 field('Game UID / Character ID',p.uid,function(v){p.uid=v;updMeta();},{ph:'e.g., 2849105732',mono:true,toast:'UID copied!'}),
@@ -255,56 +351,193 @@
                 field('Email / Gmail Address',p.email||'',function(v){p.email=v;updMeta();},{type:'email',ph:'e.g., player@gmail.com',toast:'Email copied!'}),
                 field('Discord / NID / Extra (Optional)',p.extra,function(v){p.extra=v;},{ph:'Discord, Real Name, NID...',span2:true,toast:'Info copied!'})
               );
-              d.append(ph,g);pl.appendChild(d);
+              d.append(ph,pbox,g);pl.appendChild(d);
             });
-            var f=el('div','gv-foot'),fl=el('div','gv-foot-left'),all=el('button','gv-btn pri','Copy All Squad Info'),uids=el('button','gv-btn','Copy IGNs & UIDs'),del=el('button','gv-btn danger','Delete Squad');
-            all.type=uids.type=del.type='button';
-            all.onclick=function(){copyText(squadText(s,false)).then(function(ok){toast(ok?'Squad info copied!':'Copy blocked',!ok);});};
-            uids.onclick=function(){copyText(squadText(s,true)).then(function(ok){toast(ok?'IGNs & UIDs copied!':'Copy blocked',!ok);});};
-            del.onclick=function(){squads=squads.filter(function(x){return x!==s;});save();render();toast('Squad deleted');};
-            fl.append(all,uids);f.append(fl,del);
+
+            var f=el('div','gv-foot'),fl=el('div','gv-foot-left'),all=el('button','gv-btn pri','Copy All Squad Info'),uids=el('button','gv-btn','Copy IGNs & UIDs'),disc=el('button','gv-btn','Copy for Discord'),del=el('button','gv-btn danger','Delete Squad');
+            all.type=uids.type=disc.type=del.type='button';
+            all.onclick=function(){copyText(squadText(s,'wa')).then(function(ok){toast(ok?'Squad info copied!':'Copy blocked',!ok);});};
+            uids.onclick=function(){copyText(squadText(s,'uids')).then(function(ok){toast(ok?'IGNs & UIDs copied!':'Copy blocked',!ok);});};
+            disc.onclick=function(){copyText(squadText(s,'discord')).then(function(ok){toast(ok?'Discord format copied!':'Copy blocked',!ok);});};
+            del.onclick=function(){
+              ask('Delete "'+(s.name.trim()||'this squad')+'"? This cannot be undone.','Delete Squad').then(function(ok){
+                if(!ok)return;squads=squads.filter(function(x){return x!==s;});save();render();toast('Squad deleted');
+              });
+            };
+            fl.append(all,uids,disc);f.append(fl,del);
             b.append(cfg,pl,f);c.append(h,b);return c;
           }
+
+          function renderQuickFill(list){
+            var sq=squads.find(function(x){return x.id===selSquadId;})||squads[0];
+            if(!sq){list.appendChild(el('div','gv-empty','Create a squad first to use Quick-Fill.'));return;}
+            var topCard=el('div','gv-card'),topPad=el('div','gv-cfg');
+            var selW=el('div','gv-field'),selL=el('label',null,'Select Squad for Tournament Form'),sel=el('select');
+            squads.forEach(function(item){var o=el('option',null,(item.name||'Unnamed')+' — '+(item.game||'Esports'));o.value=item.id;sel.appendChild(o);});
+            sel.value=sq.id;
+            sel.onchange=function(){selSquadId=sel.value;copiedMap={};render();};
+            selW.append(selL,sel);topPad.appendChild(selW);topCard.appendChild(topPad);list.appendChild(topCard);
+
+            var mat=el('div','gv-card');
+            sq.players.forEach(function(p,idx){
+              var sec=el('div','gv-player'),t=el('div',null,(idx+1)+'. '+(p.label||defLabel(idx)));
+              t.style.cssText='color:#22d3ee;font-weight:700;font-size:14px';
+              var grid=el('div','gv-pgrid');
+              [['IGN',p.ign,false],['Game UID',p.uid,true],['Phone / WA',p.phone,true],['Email',p.email,false]].forEach(function(f){
+                var cid=sq.id+'_'+idx+'_'+f[0];
+                var btn=el('button','gv-qcell'+(copiedMap[cid]?' done':''));btn.type='button';
+                var left=el('div');
+                var k=el('div',null,f[0]+(copiedMap[cid]?' · Copied':''));k.style.cssText='font-size:11px;color:#94a3b8';
+                var v=el('div',f[2]?'gv-mono':'',f[1]||'—');v.style.cssText='font-size:14px;font-weight:600;margin-top:2px';
+                left.append(k,v);
+                var ic=el('span');ic.innerHTML=svg(copiedMap[cid]?'check':'copy',16);ic.style.color='#22d3ee';
+                btn.append(left,ic);
+                btn.onclick=function(){
+                  if(!f[1]||!f[1].trim()){toast('Empty '+f[0],true);return;}
+                  copyText(f[1].trim()).then(function(ok){
+                    if(ok){copiedMap[cid]=true;toast('Copied '+f[0]+': '+f[1]);render();}
+                  });
+                };
+                grid.appendChild(btn);
+              });
+              sec.append(t,grid);mat.appendChild(sec);
+            });
+            list.appendChild(mat);
+          }
+
+          function renderFormatStudio(list){
+            var sq=squads.find(function(x){return x.id===selSquadId;})||squads[0];
+            if(!sq){list.appendChild(el('div','gv-empty','Create a squad first to use Format Studio.'));return;}
+            var card=el('div','gv-card'),pad=el('div','gv-player');
+            var sel=el('select');
+            squads.forEach(function(item){var o=el('option',null,(item.name||'Unnamed')+' ('+MODES[item.mode].label+')');o.value=item.id;sel.appendChild(o);});
+            sel.value=sq.id;
+            var ta=el('textarea','gv-mono');ta.rows=14;ta.readOnly=true;ta.value=squadText(sq,'wa');
+            sel.onchange=function(){selSquadId=sel.value;render();};
+            var btns=el('div','gv-foot-left');
+            [['WhatsApp Sheet','wa'],['Discord Markdown','discord'],['IGN & UID Only','uids']].forEach(function(p){
+              var b=el('button','gv-btn',p[0]);b.type='button';
+              b.onclick=function(){ta.value=squadText(sq,p[1]);};
+              btns.appendChild(b);
+            });
+            var cp=el('button','gv-btn pri','Copy Formatted Sheet');cp.type='button';
+            cp.onclick=function(){copyText(ta.value).then(function(ok){toast(ok?'Formatted sheet copied!':'Copy blocked',!ok);});};
+            pad.append(el('label',null,'Select Squad & Format'),sel,btns,ta,cp);
+            card.appendChild(pad);list.appendChild(card);
+          }
+
+          function switchTab(next){
+            tab=next;
+            Array.prototype.forEach.call(document.querySelectorAll('[data-tab]'),function(b){
+              b.classList.toggle('active',b.getAttribute('data-tab')===tab);
+            });
+            $('#gv-sbox').style.display=tab==='squads'?'block':'none';
+            $('#gv-title').textContent=tab==='squads'?'Esports Squad & Roster Vault':tab==='quickfill'?'Tournament Form Quick-Fill':'Tournament Copy Format Studio';
+            render();
+          }
+
           function render(){
             var q=query.trim().toLowerCase(),list=$('#gv-list');list.textContent='';
+            $('#gv-count').textContent=squads.length+' squad'+(squads.length===1?'':'s')+' saved · 1-tap copy for IGN, UID, Phone & Email';
+            if(tab==='quickfill'){renderQuickFill(list);return;}
+            if(tab==='format'){renderFormatStudio(list);return;}
             var hit=squads.filter(function(s){
               if(!q)return true;
               var vals=[s.name,s.tag||'',s.game];
               s.players.forEach(function(p){vals.push(p.label,p.ign,p.uid,p.phone,p.email||'',p.extra);});
               return vals.some(function(v){return (v||'').toLowerCase().indexOf(q)>-1;});
             });
-            $('#gv-count').textContent=squads.length+' squad'+(squads.length===1?'':'s')+' saved · 1-tap copy for IGN, UID, Phone & Email';
             if(!squads.length)list.appendChild(el('div','gv-empty','No squads saved yet. Tap + New Squad to add your team roster.'));
-            else if(!hit.length)list.appendChild(el('div','gv-empty','No match found.'));
+            else if(!hit.length)list.appendChild(el('div','gv-empty','No squad or player matches "'+query.trim()+'".'));
             hit.forEach(function(s){list.appendChild(buildCard(s));});
           }
+
+          function openNewSquadModal(){
+            var mode='squad4',s=el('div','gv-sheet'),a=el('div','gv-acts');
+            var nf=field('Squad Name *','',function(){},{ph:'Team Alpha BD',nocopy:1});
+            var tf=field('Clan Tag','',function(){},{ph:'e.g., TX',mono:true,nocopy:1});
+            var gf=field('Esports Game',squads.length?squads[0].game:'Free Fire MAX',function(){},{ph:'Free Fire MAX, PUBG Mobile...',list:'gv-games',nocopy:1});
+            var ni=nf.querySelector('input'),ti=tf.querySelector('input'),gi=gf.querySelector('input');
+            var seg=el('div','gv-seg');
+            Object.keys(MODES).forEach(function(k){
+              var b=el('button',null,MODES[k].label);b.type='button';b.setAttribute('aria-pressed',String(k===mode));
+              b.onclick=function(){mode=k;Array.prototype.forEach.call(seg.children,function(x){x.setAttribute('aria-pressed',String(x===b));});};
+              seg.appendChild(b);
+            });
+            var no=el('button','gv-btn','Cancel'),ok=el('button','gv-btn pri','Create Squad');no.type=ok.type='button';
+            no.onclick=closeModal;
+            function create(){
+              var name=ni.value.trim();
+              if(!name){toast('Enter a squad name first',true);ni.focus();return;}
+              var created={id:newId(),name:name,tag:ti.value.trim(),game:gi.value.trim(),mode:mode,collapsed:false,players:mkPlayers(mode)};
+              squads.unshift(created);selSquadId=created.id;
+              save();closeModal();query='';$('#gv-q').value='';switchTab('squads');toast('Squad created!');
+            }
+            ok.onclick=create;
+            a.append(no,ok);s.append(el('h2',null,'Create New Squad'),nf,tf,gf,seg,a);modal(s);
+            setTimeout(function(){ni.focus();},60);
+          }
+
+          function openExportModal(){
+            if(!squads.length){toast('Nothing to export yet',true);return;}
+            var json=JSON.stringify({app:'GamerVault',version:1,exportedAt:new Date().toISOString(),squads:squads},null,2);
+            var name='gamervault-backup-'+new Date().toISOString().slice(0,10)+'.json';
+            var s=el('div','gv-sheet'),ta=el('textarea','gv-mono'),a=el('div','gv-acts');
+            ta.value=json;ta.readOnly=true;ta.rows=6;
+            var cp=el('button','gv-btn pri','Copy Backup Code'),sv=el('button','gv-btn','Download JSON'),cl=el('button','gv-btn','Close');
+            cp.type=sv.type=cl.type='button';
+            cp.onclick=function(){copyText(json).then(function(ok){toast(ok?'Backup copied!':'Copy blocked',!ok);});};
+            sv.onclick=function(){
+              try{
+                var url=URL.createObjectURL(new Blob([json],{type:'application/json'})),l=document.createElement('a');
+                l.href=url;l.download=name;document.body.appendChild(l);l.click();document.body.removeChild(l);
+                setTimeout(function(){URL.revokeObjectURL(url);},4000);toast('Backup file downloaded');
+              }catch(e){toast('Use Copy Backup Code',true);}
+            };
+            cl.onclick=closeModal;a.append(sv,cl);
+            s.append(el('h2',null,'Export Squad Backup'),el('p',null,'Copy this backup code or download it as a JSON file.'),ta,cp,a);modal(s);
+          }
+
+          function importRaw(text){
+            try{
+              var d=JSON.parse(text),arr=Array.isArray(d)?d:(d&&d.squads);
+              if(!Array.isArray(arr))throw new Error('bad');
+              var got=arr.map(clean).filter(Boolean);
+              if(!got.length)throw new Error('empty');
+              got.forEach(function(n){var i=squads.findIndex(function(x){return x.id===n.id;});if(i>-1)squads[i]=n;else squads.push(n);});
+              save();render();closeModal();toast('Imported '+got.length+' squad'+(got.length>1?'s':''));
+            }catch(err){toast('Invalid GamerVault backup',true);}
+          }
+
+          function openImportModal(){
+            var s=el('div','gv-sheet'),ta=el('textarea','gv-mono'),a=el('div','gv-acts');
+            ta.rows=6;ta.placeholder='Paste your GamerVault JSON backup code here...';
+            var fb=el('button','gv-btn','Choose JSON File'),go=el('button','gv-btn pri','Import Pasted Backup'),cl=el('button','gv-btn','Close');
+            fb.type=go.type=cl.type='button';
+            fb.onclick=function(){$('#gv-file').click();};
+            go.onclick=function(){if(!ta.value.trim()){toast('Paste backup first',true);return;}importRaw(ta.value);};
+            cl.onclick=closeModal;a.append(fb,cl);
+            s.append(el('h2',null,'Import Squad Backup'),el('p',null,'Paste a backup code or pick a .json backup file.'),ta,go,a);modal(s);
+          }
+
           $('#gv-sic').innerHTML=svg('search',16);
-          $('#gv-add').onclick=function(){
-            squads.unshift({id:newId(),name:'New Squad '+(squads.length+1),tag:'',game:'Free Fire MAX',mode:'squad4',collapsed:false,players:mkPlayers('squad4')});
-            save();render();toast('New squad added');
-          };
-          $('#gv-exp').onclick=function(){
-            var json=JSON.stringify({app:'GamerVault',version:1,squads:squads},null,2);
-            copyText(json).then(function(ok){toast(ok?'Backup JSON copied to clipboard!':'Copy blocked',!ok);});
-          };
-          $('#gv-imp').onclick=function(){$('#gv-file').click();};
+          $('#gv-home').onclick=function(){switchTab('squads');};
+          Array.prototype.forEach.call(document.querySelectorAll('[data-tab]'),function(b){
+            b.onclick=function(){switchTab(b.getAttribute('data-tab'));};
+          });
+          $('#gv-add').onclick=openNewSquadModal;
+          $('#gv-exp').onclick=openExportModal;
+          $('#gv-imp').onclick=openImportModal;
           $('#gv-file').onchange=function(e){
             var f=e.target.files[0];if(!f)return;
-            var r=new FileReader();
-            r.onload=function(){
-              try{
-                var d=JSON.parse(r.result),arr=Array.isArray(d)?d:(d&&d.squads);
-                if(Array.isArray(arr)){squads=arr.map(clean).filter(Boolean);save();render();toast('Backup imported!');}
-              }catch(err){toast('Invalid backup file',true);}
-            };
-            r.readAsText(f);e.target.value='';
+            var r=new FileReader();r.onload=function(){importRaw(r.result);};r.readAsText(f);e.target.value='';
           };
           $('#gv-q').oninput=function(e){query=e.target.value;render();};
           render();
         }
 
         window.addEventListener('load', function () {
-          setTimeout(bootStandaloneIfNeeded, 700);
+          setTimeout(bootStandaloneIfNeeded, 500);
         });
       })();
     </script>
