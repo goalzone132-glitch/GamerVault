@@ -1,0 +1,6 @@
+{
+  "name": "GamerVault — Esports Squad & Tournament Registration Manager",
+  "description": "Store esports squad rosters, player IGNs, Game UIDs, phone numbers, and emails in one vault for instant one-tap copy-paste during tournament registration.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
