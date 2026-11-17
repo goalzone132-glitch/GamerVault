@@ -4,12 +4,36 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#090d16" />
-    <title>GamerVault — Esports Squad & Tournament Registration Manager</title>
-    <meta name="description" content="Store esports squad rosters, player IGNs, Game UIDs, phone numbers, and emails in one vault for instant one-tap copy-paste during tournament registration." />
-    <meta property="og:title" content="GamerVault — Esports Squad & Tournament Registration Manager" />
-    <meta property="og:description" content="Store esports squad rosters, player IGNs, Game UIDs, phone numbers, and emails in one vault for instant one-tap copy-paste during tournament registration." />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="GamerVault" />
+    <link rel="icon" type="image/svg+xml" href="./icon.svg" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <title>GamerVault — Esports Squad & Tournament Roster Vault</title>
+    <meta name="description" content="Save your esports squad IGNs, Game UIDs, WhatsApp numbers, and emails in one place for instant one-tap copy-paste during tournament registration." />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="GamerVault" />
+    <meta property="og:title" content="GamerVault — Esports Squad & Tournament Roster Vault" />
+    <meta property="og:description" content="Save your esports squad IGNs, Game UIDs, WhatsApp numbers, and emails in one place for instant one-tap copy-paste during tournament registration." />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="GamerVault — Esports Squad & Tournament Roster Vault" />
+    <meta name="twitter:description" content="Save your esports squad IGNs, Game UIDs, WhatsApp numbers, and emails in one place for instant one-tap copy-paste during tournament registration." />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "GamerVault",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "All",
+        "description": "Save your esports squad IGNs, Game UIDs, WhatsApp numbers, and emails in one place for instant one-tap copy-paste during tournament registration.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@600;700&display=swap" rel="stylesheet" />
@@ -121,6 +145,7 @@
             '<button type="button" data-tab="format">Format Studio</button>',
             '</nav>',
             '<div class="gv-actions">',
+            '<button class="gv-btn" id="gv-dl" type="button" style="border-color:rgba(34,211,238,0.45);color:#67e8f9">Download App</button>',
             '<button class="gv-btn" id="gv-exp" type="button">Export</button>',
             '<button class="gv-btn" id="gv-imp" type="button">Import</button>',
             '<button class="gv-btn pri" id="gv-add" type="button">+ New Squad</button>',
@@ -520,11 +545,40 @@
             s.append(el('h2',null,'Import Squad Backup'),el('p',null,'Paste a backup code or pick a .json backup file.'),ta,go,a);modal(s);
           }
 
+          function openDownloadModal(){
+            var s=el('div','gv-sheet'),a=el('div','gv-acts');
+            var info=el('p',null,'Option 1 (Phone Home Screen): Open this link in Chrome or Safari, tap menu (⋮ or Share) and choose "Install app" / "Add to Home Screen".');
+            var info2=el('p',null,'Option 2 (Direct Download): Download a standalone offline GamerVault.html file right to your device.');
+            var dlBtn=el('button','gv-btn pri','Download GamerVault.html');dlBtn.type='button';
+            var cpBtn=el('button','gv-btn','Copy App Link');cpBtn.type='button';
+            var cl=el('button','gv-btn','Close');cl.type='button';
+            dlBtn.onclick=function(){
+              try{
+                var clone=document.documentElement.cloneNode(true);
+                var cloneRoot=clone.querySelector('#root');
+                if(cloneRoot){cloneRoot.innerHTML='';cloneRoot.className='';}
+                var dynStyles=clone.querySelectorAll('head style');
+                if(dynStyles.length>1){dynStyles[dynStyles.length-1].remove();}
+                var docHtml='<!doctype html>\\n'+clone.outerHTML;
+                var blob=new Blob([docHtml],{type:'text/html;charset=utf-8'});
+                var url=URL.createObjectURL(blob),l=document.createElement('a');
+                l.href=url;l.download='GamerVault.html';document.body.appendChild(l);l.click();document.body.removeChild(l);
+                setTimeout(function(){URL.revokeObjectURL(url);},4000);
+                closeModal();toast('Downloading GamerVault.html!');
+              }catch(e){toast('Download blocked by browser',true);}
+            };
+            cpBtn.onclick=function(){copyText(window.location.href).then(function(ok){toast(ok?'Link copied! Open in Chrome/Safari to install.':'Copy blocked',!ok);});};
+            cl.onclick=closeModal;
+            a.append(cpBtn,cl);
+            s.append(el('h2',null,'Install / Download GamerVault'),info,info2,dlBtn,a);modal(s);
+          }
+
           $('#gv-sic').innerHTML=svg('search',16);
           $('#gv-home').onclick=function(){switchTab('squads');};
           Array.prototype.forEach.call(document.querySelectorAll('[data-tab]'),function(b){
             b.onclick=function(){switchTab(b.getAttribute('data-tab'));};
           });
+          $('#gv-dl').onclick=openDownloadModal;
           $('#gv-add').onclick=openNewSquadModal;
           $('#gv-exp').onclick=openExportModal;
           $('#gv-imp').onclick=openImportModal;

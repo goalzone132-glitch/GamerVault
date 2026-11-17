@@ -260,9 +260,9 @@ export const BackupModal: React.FC<BackupModalProps> = ({
         ? parsed.squads
         : null;
       if (!arr) throw new Error('Invalid format');
-      const cleaned = arr
+      const cleaned = (arr as unknown[])
         .map(sanitizeSquad)
-        .filter((x): x is Squad => x !== null);
+        .filter((x: Squad | null): x is Squad => x !== null);
       if (!cleaned.length) throw new Error('No squads found');
       onImportSquads(cleaned);
     } catch {

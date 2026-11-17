@@ -31,6 +31,8 @@ import {
   ConfirmModal,
   NewSquadModal,
 } from './components/Modals';
+import { PWAInstallButton } from './components/PWAInstallButton';
+import { OfflineIndicator } from './components/OfflineIndicator';
 
 export default function App() {
   const [squads, setSquads] = useState<Squad[]>(() => loadSquads());
@@ -256,15 +258,18 @@ export default function App() {
             })}
           </nav>
 
-          {/* Zone 3: 2 Primary Actions */}
-          <div className="flex items-center gap-2.5 shrink-0">
+          {/* Zone 3: Primary Actions + Always-Accessible Install / Download */}
+          <div className="flex items-center gap-2 shrink-0">
+            <PWAInstallButton squads={squads} onToast={triggerToast} />
+
             <button
               type="button"
               onClick={() => setShowBackupModal(true)}
               className="inline-flex items-center justify-center gap-1.5 min-h-[40px] px-3.5 py-2 rounded-lg border border-slate-800 bg-slate-900/90 hover:bg-slate-800 hover:border-slate-700 text-xs font-medium text-slate-200 transition-colors cursor-pointer whitespace-nowrap shrink-0"
             >
               <Database className="w-3.5 h-3.5 text-cyan-400" />
-              <span>GitHub HTML / Backup</span>
+              <span className="hidden sm:inline">GitHub HTML / Backup</span>
+              <span className="sm:hidden">Backup</span>
             </button>
 
             <button
@@ -494,6 +499,9 @@ export default function App() {
       >
         {toast?.message || ''}
       </div>
+
+      {/* Offline status pill */}
+      <OfflineIndicator />
 
       {/* Datalist for popular esports games */}
       <datalist id="esports-games-list">
