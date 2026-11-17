@@ -213,7 +213,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#090d16] text-slate-100 pb-24 md:pb-16">
+    <div className="bg-[#090d16] text-slate-100 pb-6">
       {/* Top Bar Contract: Strict 3-Zone Header */}
       <header className="sticky top-0 z-30 bg-[#090d16]/90 backdrop-blur-md border-b border-slate-800/80">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-4">
@@ -283,6 +283,39 @@ export default function App() {
           </div>
         </div>
       </header>
+
+      {/* Mobile Compact Navigation Bar (placed below header so bottom 320x50 ad banner has zero overlap) */}
+      <nav
+        aria-label="Mobile Navigation"
+        className="md:hidden bg-[#0c101d] border-b border-slate-800/80 grid grid-cols-4 items-center px-2"
+      >
+        {[
+          { id: 'squads' as const, label: 'Squads', icon: Shield },
+          { id: 'quickfill' as const, label: 'Quick-Fill', icon: Zap },
+          { id: 'format' as const, label: 'Formats', icon: FileText },
+          { id: 'directory' as const, label: 'Players', icon: Users },
+        ].map((item) => {
+          const Icon = item.icon;
+          const isActive = activeTab === item.id;
+          return (
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => setActiveTab(item.id)}
+              className={`min-h-[44px] flex flex-col items-center justify-center border-b-2 transition-colors cursor-pointer ${
+                isActive
+                  ? 'border-cyan-400 text-cyan-300 font-semibold'
+                  : 'border-transparent text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              <Icon className="w-4 h-4" />
+              <span className="text-[11px] mt-0.5 whitespace-nowrap">
+                {item.label}
+              </span>
+            </button>
+          );
+        })}
+      </nav>
 
       {/* Main Content Container */}
       <main className="max-w-6xl mx-auto px-4 sm:px-6 pt-6 space-y-6">
@@ -450,44 +483,11 @@ export default function App() {
         )}
       </main>
 
-      {/* Mobile Fixed Bottom Navigation Tab Bar (Respects 15% Sticky Cap) */}
-      <nav
-        aria-label="Mobile Navigation"
-        className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-[#090d16]/95 backdrop-blur-md border-t border-slate-800 grid grid-cols-4 items-center h-14 px-2"
-      >
-        {[
-          { id: 'squads' as const, label: 'Squads', icon: Shield },
-          { id: 'quickfill' as const, label: 'Quick-Fill', icon: Zap },
-          { id: 'format' as const, label: 'Formats', icon: FileText },
-          { id: 'directory' as const, label: 'Players', icon: Users },
-        ].map((item) => {
-          const Icon = item.icon;
-          const isActive = activeTab === item.id;
-          return (
-            <button
-              key={item.id}
-              type="button"
-              onClick={() => setActiveTab(item.id)}
-              className={`min-h-[44px] flex flex-col items-center justify-center rounded-lg transition-colors cursor-pointer ${
-                isActive
-                  ? 'text-cyan-300 font-semibold'
-                  : 'text-slate-400 hover:text-slate-200'
-              }`}
-            >
-              <Icon className="w-4 h-4" />
-              <span className="text-[11px] mt-0.5 whitespace-nowrap">
-                {item.label}
-              </span>
-            </button>
-          );
-        })}
-      </nav>
-
-      {/* Toast Notification Banner */}
+      {/* Toast Notification Banner (positioned above fixed 320x50 banner) */}
       <div
         role="status"
         aria-live="polite"
-        className={`fixed left-1/2 bottom-20 md:bottom-8 z-50 -translate-x-1/2 px-4 py-2.5 rounded-xl border text-xs sm:text-sm font-semibold shadow-xl transition-all duration-150 pointer-events-none max-w-[90vw] text-center ${
+        className={`fixed left-1/2 bottom-16 z-50 -translate-x-1/2 px-4 py-2.5 rounded-xl border text-xs sm:text-sm font-semibold shadow-xl transition-all duration-150 pointer-events-none max-w-[90vw] text-center ${
           toast
             ? 'opacity-100 translate-y-0'
             : 'opacity-0 translate-y-3'

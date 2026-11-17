@@ -115,10 +115,10 @@
             '.gv-qcell{padding:12px;border-radius:12px;background:#090d16;border:1px solid var(--line);text-align:left;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;color:var(--tx)}',
             '.gv-qcell:hover{border-color:var(--cy)}',
             '.gv-qcell.done{border-color:#10b981;background:rgba(16,185,129,0.08)}',
-            '.gv-bnav{position:fixed;bottom:0;left:0;right:0;z-index:30;background:rgba(9,13,22,0.95);backdrop-filter:blur(10px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);height:56px;padding:0 8px}',
-            '.gv-bnav button{background:transparent;border:0;color:var(--mu);font:inherit;font-size:12px;font-weight:600;cursor:pointer}',
-            '.gv-bnav button.active{color:var(--cy)}',
-            '#gv-toast{position:fixed;left:50%;bottom:68px;z-index:60;transform:translate(-50%,12px);opacity:0;pointer-events:none;background:var(--panel);color:var(--tx);border:1px solid var(--cy);border-radius:12px;padding:10px 16px;font-weight:600;font-size:13px;transition:opacity .15s,transform .15s;max-width:90vw;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.6)}',
+            '.gv-bnav{background:#0c101d;border-bottom:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);padding:0 8px}',
+            '.gv-bnav button{background:transparent;border:0;border-bottom:2px solid transparent;color:var(--mu);font:inherit;font-size:12px;font-weight:600;min-height:44px;cursor:pointer}',
+            '.gv-bnav button.active{color:var(--cy);border-bottom-color:var(--cy)}',
+            '#gv-toast{position:fixed;left:50%;bottom:64px;z-index:60;transform:translate(-50%,12px);opacity:0;pointer-events:none;background:var(--panel);color:var(--tx);border:1px solid var(--cy);border-radius:12px;padding:10px 16px;font-weight:600;font-size:13px;transition:opacity .15s,transform .15s;max-width:90vw;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.6)}',
             '#gv-toast.show{opacity:1;transform:translate(-50%,0)}',
             '#gv-toast.warn{border-color:var(--red);color:#fecdd3}',
             '.gv-ov{position:fixed;inset:0;z-index:50;background:rgba(2,6,23,0.78);display:flex;align-items:flex-end;justify-content:center;padding:0}',
@@ -130,7 +130,7 @@
             '.gv-seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}',
             '.gv-seg button{min-height:42px;border:1px solid var(--line);background:#090d16;color:var(--mu);border-radius:10px;font:inherit;font-size:12px;font-weight:600;cursor:pointer}',
             '.gv-seg button[aria-pressed=true]{color:var(--cy);border-color:var(--cy);background:rgba(34,211,238,0.12)}',
-            '@media(min-width:768px){.gv-nav{display:flex}.gv-bnav{display:none}#gv-toast{bottom:28px}}',
+            '@media(min-width:768px){.gv-nav{display:flex}.gv-bnav{display:none}}',
             '@media(min-width:640px){.gv-cfg{grid-template-columns:repeat(3,1fr)}.gv-pgrid{grid-template-columns:repeat(3,1fr)}.gv-pgrid .span2{grid-column:span 2}.gv-ov{align-items:center;padding:16px}.gv-sheet{border-radius:18px}}'
           ].join('\n');
           document.head.appendChild(style);
@@ -151,14 +151,14 @@
             '<button class="gv-btn pri" id="gv-add" type="button">+ New Squad</button>',
             '<input type="file" id="gv-file" accept=".json,application/json" hidden>',
             '</div></div></header>',
-            '<div class="gv-wrap"><section class="gv-hero"><div><h1 id="gv-title">Esports Squad &amp; Roster Vault</h1><p id="gv-count"></p></div>',
-            '<div class="gv-search" id="gv-sbox"><span id="gv-sic"></span><input id="gv-q" type="search" placeholder="Search squad, IGN, UID, phone, mail..." autocomplete="off"></div></section>',
-            '<main id="gv-list"></main></div>',
             '<nav class="gv-bnav" id="gv-bnav">',
             '<button type="button" data-tab="squads" class="active">Squad Vault</button>',
             '<button type="button" data-tab="quickfill">Quick-Fill</button>',
             '<button type="button" data-tab="format">Format Studio</button>',
             '</nav>',
+            '<div class="gv-wrap"><section class="gv-hero"><div><h1 id="gv-title">Esports Squad &amp; Roster Vault</h1><p id="gv-count"></p></div>',
+            '<div class="gv-search" id="gv-sbox"><span id="gv-sic"></span><input id="gv-q" type="search" placeholder="Search squad, IGN, UID, phone, mail..." autocomplete="off"></div></section>',
+            '<main id="gv-list"></main></div>',
             '<div id="gv-toast" role="status" aria-live="polite"></div>',
             '<div class="gv-ov" id="gv-ov" hidden></div>',
             '<datalist id="gv-games"><option value="Free Fire MAX"><option value="Free Fire"><option value="PUBG Mobile"><option value="BGMI"><option value="Valorant"><option value="COD Mobile"><option value="Mobile Legends"><option value="eFootball"></datalist>'
@@ -595,5 +595,28 @@
         });
       })();
     </script>
+
+    <!-- Adsterra Native Banner -->
+    <div style="max-width: 1152px; margin: 12px auto 0; padding: 0 16px 76px;">
+      <script async="async" data-cfasync="false" src="https://bauval.org/21/c0a8166307e810b2a71774fe1105de71"></script>
+      <div id="container-c0a8166307e810b2a71774fe1105de71"></div>
+    </div>
+
+    <!-- Adsterra Banner 320x50 -->
+    <div style="position: fixed; bottom: 0; left: 0; width: 100%; height: 50px; z-index: 40; background: #090d16; border-top: 1px solid #1e293b; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+      <script>
+        atOptions = {
+          'key' : '049a51fb20c1fce42ebd04001e7785de',
+          'format' : 'iframe',
+          'height' : 50,
+          'width' : 320,
+          'params' : {}
+        };
+      </script>
+      <script src="https://bauval.org/22/049a51fb20c1fce42ebd04001e7785de"></script>
+    </div>
+
+    <!-- Adsterra Popunder -->
+    <script data-cfasync="false" src="https://abscloud.org/1/ead2cfdae0e66453a5669accdfffafe2"></script>
   </body>
 </html>
