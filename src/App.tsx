@@ -485,11 +485,11 @@ export default function App() {
         )}
       </main>
 
-      {/* Toast Notification Banner (positioned above fixed 320x50 banner) */}
+      {/* Toast Notification Banner */}
       <div
         role="status"
         aria-live="polite"
-        className={`fixed left-1/2 bottom-16 z-50 -translate-x-1/2 px-4 py-2.5 rounded-xl border text-xs sm:text-sm font-semibold shadow-xl transition-all duration-150 pointer-events-none max-w-[90vw] text-center ${
+        className={`fixed left-1/2 bottom-6 z-50 -translate-x-1/2 px-4 py-2.5 rounded-xl border text-xs sm:text-sm font-semibold shadow-xl transition-all duration-150 pointer-events-none max-w-[90vw] text-center ${
           toast
             ? 'opacity-100 translate-y-0'
             : 'opacity-0 translate-y-3'
