@@ -215,7 +215,7 @@ export default function App() {
   };
 
   return (
-    <div className="bg-[#090d16] text-slate-100 pb-6">
+    <div className="min-h-screen bg-[#090d16] text-slate-100 pb-20">
       {/* Top Bar Contract: Strict 3-Zone Header */}
       <header className="sticky top-0 z-30 bg-[#090d16]/90 backdrop-blur-md border-b border-slate-800/80">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-4">
@@ -485,11 +485,11 @@ export default function App() {
         )}
       </main>
 
-      {/* Toast Notification Banner */}
+      {/* Toast Notification Banner (positioned above fixed 320x50 banner) */}
       <div
         role="status"
         aria-live="polite"
-        className={`fixed left-1/2 bottom-6 z-50 -translate-x-1/2 px-4 py-2.5 rounded-xl border text-xs sm:text-sm font-semibold shadow-xl transition-all duration-150 pointer-events-none max-w-[90vw] text-center ${
+        className={`fixed left-1/2 bottom-16 z-50 -translate-x-1/2 px-4 py-2.5 rounded-xl border text-xs sm:text-sm font-semibold shadow-xl transition-all duration-150 pointer-events-none max-w-[90vw] text-center ${
           toast
             ? 'opacity-100 translate-y-0'
             : 'opacity-0 translate-y-3'
