@@ -33,6 +33,7 @@ import {
 } from './components/Modals';
 import { PWAInstallButton } from './components/PWAInstallButton';
 import { OfflineIndicator } from './components/OfflineIndicator';
+import { trackEvent } from './utils/analytics';
 
 export default function App() {
   const [squads, setSquads] = useState<Squad[]>(() => loadSquads());
@@ -157,6 +158,7 @@ export default function App() {
     setSearchQuery('');
     setGameFilter('ALL');
     setActiveTab('squads');
+    trackEvent('squad_created', { mode: newSquad.mode });
     triggerToast(`Created "${newSquad.name}"`);
   };
 

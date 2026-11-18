@@ -2,6 +2,13 @@
 <html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
+    <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-MSJZGHCM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#090d16" />
     <meta name="mobile-web-app-capable" content="yes" />
@@ -564,6 +571,7 @@
                 var url=URL.createObjectURL(blob),l=document.createElement('a');
                 l.href=url;l.download='GamerVault.html';document.body.appendChild(l);l.click();document.body.removeChild(l);
                 setTimeout(function(){URL.revokeObjectURL(url);},4000);
+                window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:'html_downloaded',squad_count:squads.length});
                 closeModal();toast('Downloading GamerVault.html!');
               }catch(e){toast('Download blocked by browser',true);}
             };

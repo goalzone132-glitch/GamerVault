@@ -11,6 +11,7 @@ import { usePWAInstall } from '../hooks/usePWAInstall';
 import { Squad } from '../types';
 import { copyToClipboard } from '../utils/storage';
 import { generateStandaloneHtml } from '../utils/standaloneHtml';
+import { trackEvent } from '../utils/analytics';
 
 interface PWAInstallButtonProps {
   squads: Squad[];
@@ -60,6 +61,7 @@ export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({
       a.click();
       document.body.removeChild(a);
       window.setTimeout(() => URL.revokeObjectURL(url), 4000);
+      trackEvent('html_downloaded', { squad_count: squads.length });
       onToast?.('Downloading GamerVault.html (includes your saved squads)!');
       setShowGuide(false);
     } catch {
@@ -71,6 +73,7 @@ export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({
     const ok = await copyToClipboard(window.location.href);
     if (ok) {
       setCopiedLink(true);
+      trackEvent('app_link_copied');
       onToast?.('Link copied! Paste in Chrome or Safari to install.');
       window.setTimeout(() => setCopiedLink(false), 1500);
     } else {

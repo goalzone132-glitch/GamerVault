@@ -10,6 +10,13 @@ export function generateStandaloneHtml(initialSquads: Squad[]): string {
 <html lang="en" class="dark">
 <head>
 <meta charset="utf-8">
+<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-MSJZGHCM"><\/script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+<\/script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#090d16">
 <title>GamerVault — Esports Squad & Tournament Registration Manager</title>
