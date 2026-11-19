@@ -260,9 +260,9 @@ export default function App() {
             })}
           </nav>
 
-          {/* Zone 3: Primary Actions + Always-Accessible Install / Download */}
+          {/* Zone 3: Primary Actions + Always-Accessible Install App */}
           <div className="flex items-center gap-2 shrink-0">
-            <PWAInstallButton squads={squads} onToast={triggerToast} />
+            <PWAInstallButton onToast={triggerToast} />
 
             <button
               type="button"

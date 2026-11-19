@@ -1,25 +1,14 @@
 import React, { useMemo, useState } from 'react';
-import {
-  Check,
-  Copy,
-  Download,
-  ExternalLink,
-  Smartphone,
-  X,
-} from 'lucide-react';
+import { Check, Copy, Download, Smartphone, X } from 'lucide-react';
 import { usePWAInstall } from '../hooks/usePWAInstall';
-import { Squad } from '../types';
 import { copyToClipboard } from '../utils/storage';
-import { generateStandaloneHtml } from '../utils/standaloneHtml';
 import { trackEvent } from '../utils/analytics';
 
 interface PWAInstallButtonProps {
-  squads: Squad[];
   onToast?: (msg: string, isWarning?: boolean) => void;
 }
 
 export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({
-  squads,
   onToast,
 }) => {
   const { isInstallable, isInstalled, isIOS, install } = usePWAInstall();
@@ -42,31 +31,11 @@ export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({
     if (isInstallable) {
       const accepted = await install();
       if (accepted) {
-        onToast?.('GamerVault installed on your device!');
+        onToast?.('GamerVault installed! Check your Home Screen for the App Icon.');
         return;
       }
     }
     setShowGuide(true);
-  };
-
-  const handleDownloadOfflineHtml = () => {
-    try {
-      const html = generateStandaloneHtml(squads);
-      const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'GamerVault.html';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      window.setTimeout(() => URL.revokeObjectURL(url), 4000);
-      trackEvent('html_downloaded', { squad_count: squads.length });
-      onToast?.('Downloading GamerVault.html (includes your saved squads)!');
-      setShowGuide(false);
-    } catch {
-      onToast?.('Download blocked by browser. Try opening in Chrome.', true);
-    }
   };
 
   const handleCopyUrl = async () => {
@@ -74,7 +43,7 @@ export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({
     if (ok) {
       setCopiedLink(true);
       trackEvent('app_link_copied');
-      onToast?.('Link copied! Paste in Chrome or Safari to install.');
+      onToast?.('Link copied! Open in Chrome or Safari to install App Icon.');
       window.setTimeout(() => setCopiedLink(false), 1500);
     } else {
       onToast?.('Could not copy link', true);
@@ -89,7 +58,7 @@ export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({
         className="inline-flex items-center justify-center gap-1.5 min-h-[40px] px-3.5 py-2 rounded-lg border border-cyan-500/40 bg-cyan-500/15 hover:bg-cyan-500/25 text-xs font-semibold text-cyan-200 transition-colors cursor-pointer whitespace-nowrap shrink-0"
       >
         <Download className="w-3.5 h-3.5 text-cyan-300" />
-        <span>Install / Download</span>
+        <span>Install App</span>
       </button>
 
       {showGuide && (
@@ -104,7 +73,7 @@ export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({
               <div className="flex items-center gap-2">
                 <Smartphone className="w-5 h-5 text-cyan-400" />
                 <h2 className="text-lg font-bold text-slate-100">
-                  Get GamerVault on Device
+                  Install GamerVault App Icon
                 </h2>
               </div>
               <button
@@ -120,16 +89,17 @@ export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({
             {isInAppBrowser && (
               <div className="p-3 rounded-xl bg-amber-950/40 border border-amber-500/40 text-xs text-amber-200 leading-relaxed">
                 You opened this link inside Messenger / WhatsApp / Facebook
-                browser. Tap the top-right menu (<strong>⋮</strong>) and choose{' '}
+                browser. Tap the top-right menu (<strong>⋮</strong>) &rarr;{' '}
                 <strong>Open in Chrome</strong> or <strong>Safari</strong> to
-                install directly.
+                install the App Icon on your phone.
               </div>
             )}
 
-            {/* Option 1: Browser Home Screen Install */}
-            <div className="p-4 rounded-xl bg-[#090d16] border border-slate-800 space-y-2">
+            <div className="p-4 rounded-xl bg-[#090d16] border border-slate-800 space-y-2.5">
               <div className="text-xs font-semibold text-cyan-300">
-                Option 1: Install as Mobile / PC App (No Play Store needed)
+                {isIOS
+                  ? 'Add GamerVault Icon on iPhone / iPad'
+                  : 'Install GamerVault App Icon (Android / PC)'}
               </div>
               {isIOS ? (
                 <ol className="text-xs text-slate-300 space-y-1.5 list-decimal list-inside leading-relaxed">
@@ -137,7 +107,7 @@ export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({
                     Open this link in <strong>Safari</strong>.
                   </li>
                   <li>
-                    Tap the <strong>Share</strong> icon at the bottom/top bar.
+                    Tap the <strong>Share</strong> icon in the toolbar.
                   </li>
                   <li>
                     Tap <strong>Add to Home Screen</strong> &rarr;{' '}
@@ -155,48 +125,41 @@ export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({
                   </li>
                   <li>
                     Tap <strong>Install app</strong> or{' '}
-                    <strong>Add to Home screen</strong>.
+                    <strong>Add to Home screen</strong> &rarr;{' '}
+                    <strong>Install</strong>.
                   </li>
                 </ol>
               )}
+              <p className="text-[11px] text-slate-400 pt-1">
+                This installs GamerVault directly on your Home Screen with its
+                App Icon — no HTML file download needed.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2.5">
               <button
                 type="button"
                 onClick={handleCopyUrl}
-                className="mt-2 w-full inline-flex items-center justify-center gap-2 min-h-[40px] px-3 py-2 rounded-lg border border-slate-700 bg-slate-800/80 hover:bg-slate-800 text-xs font-medium text-slate-200 cursor-pointer"
+                className="flex-1 inline-flex items-center justify-center gap-2 min-h-[44px] px-4 py-2 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs sm:text-sm font-semibold cursor-pointer"
               >
                 {copiedLink ? (
                   <>
-                    <Check className="w-3.5 h-3.5 text-emerald-400" />
+                    <Check className="w-4 h-4" />
                     <span>Link Copied!</span>
                   </>
                 ) : (
                   <>
-                    <Copy className="w-3.5 h-3.5 text-cyan-400" />
-                    <span>Copy App Link to Open in Chrome</span>
+                    <Copy className="w-4 h-4" />
+                    <span>Copy Link for Chrome / Safari</span>
                   </>
                 )}
               </button>
-            </div>
-
-            {/* Option 2: Direct Single-File Download */}
-            <div className="p-4 rounded-xl bg-[#090d16] border border-slate-800 space-y-2.5">
-              <div className="text-xs font-semibold text-cyan-300">
-                Option 2: Direct Offline File Download
-              </div>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Download a single offline{' '}
-                <span className="font-mono text-slate-200">GamerVault.html</span>{' '}
-                file (with all your squads inside) to open anytime from your
-                phone&apos;s Downloads folder.
-              </p>
               <button
                 type="button"
-                onClick={handleDownloadOfflineHtml}
-                className="w-full inline-flex items-center justify-center gap-2 min-h-[44px] px-4 py-2 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs sm:text-sm font-bold cursor-pointer"
+                onClick={() => setShowGuide(false)}
+                className="min-h-[44px] px-4 py-2 rounded-lg border border-slate-800 bg-slate-900 hover:bg-slate-800 text-xs sm:text-sm font-medium text-slate-300 cursor-pointer"
               >
-                <Download className="w-4 h-4" />
-                <span>Download GamerVault.html</span>
-                <ExternalLink className="w-3.5 h-3.5 opacity-70" />
+                Close
               </button>
             </div>
           </div>

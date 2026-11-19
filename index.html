@@ -57,6 +57,13 @@
   </head>
   <body class="bg-[#090d16] text-slate-100 antialiased selection:bg-cyan-500/30 selection:text-cyan-200">
     <div id="root"></div>
+    <script>
+      window.__deferredInstallPrompt = null;
+      window.addEventListener('beforeinstallprompt', function (e) {
+        e.preventDefault();
+        window.__deferredInstallPrompt = e;
+      });
+    </script>
     <script type="module" src="./src/main.tsx"></script>
 
     <!-- GitHub Direct-Open / Unbuilt Branch Engine: Ensures index.html works with 100% of features when served directly from GitHub Pages main branch -->
@@ -68,6 +75,20 @@
             return;
           }
           if (!root) return;
+
+          if (!document.querySelector('link[rel="manifest"]')) {
+            var ml = document.createElement('link');
+            ml.rel = 'manifest';
+            ml.href = './manifest.webmanifest';
+            document.head.appendChild(ml);
+          }
+          var appleIc = document.querySelector('link[rel="apple-touch-icon"]');
+          if (appleIc) appleIc.href = './public/apple-touch-icon.png';
+          var svgIc = document.querySelector('link[rel="icon"]');
+          if (svgIc) svgIc.href = './public/icon.svg';
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js').catch(function () {});
+          }
 
           var style = document.createElement('style');
           style.textContent = [
@@ -152,7 +173,7 @@
             '<button type="button" data-tab="format">Format Studio</button>',
             '</nav>',
             '<div class="gv-actions">',
-            '<button class="gv-btn" id="gv-dl" type="button" style="border-color:rgba(34,211,238,0.45);color:#67e8f9">Download App</button>',
+            '<button class="gv-btn" id="gv-dl" type="button" style="border-color:rgba(34,211,238,0.45);color:#67e8f9">Install App</button>',
             '<button class="gv-btn" id="gv-exp" type="button">Export</button>',
             '<button class="gv-btn" id="gv-imp" type="button">Import</button>',
             '<button class="gv-btn pri" id="gv-add" type="button">+ New Squad</button>',
@@ -552,41 +573,60 @@
             s.append(el('h2',null,'Import Squad Backup'),el('p',null,'Paste a backup code or pick a .json backup file.'),ta,go,a);modal(s);
           }
 
-          function openDownloadModal(){
+          function openInstallGuide(){
             var s=el('div','gv-sheet'),a=el('div','gv-acts');
-            var info=el('p',null,'Option 1 (Phone Home Screen): Open this link in Chrome or Safari, tap menu (⋮ or Share) and choose "Install app" / "Add to Home Screen".');
-            var info2=el('p',null,'Option 2 (Direct Download): Download a standalone offline GamerVault.html file right to your device.');
-            var dlBtn=el('button','gv-btn pri','Download GamerVault.html');dlBtn.type='button';
-            var cpBtn=el('button','gv-btn','Copy App Link');cpBtn.type='button';
+            var ua=navigator.userAgent||'';
+            var isIOS=/iphone|ipad|ipod/i.test(ua);
+            var isInApp=/FBAN|FBAV|Instagram|Messenger|WhatsApp|Line|MicroMessenger|wv/i.test(ua);
+            if(isInApp){
+              var warn=el('p',null,'You opened this link inside Messenger / WhatsApp / Facebook browser. Tap menu (⋮) and choose "Open in Chrome" or "Safari" to install the App Icon.');
+              warn.style.color='#fde68a';
+              s.appendChild(warn);
+            }
+            var info=el('p',null,isIOS
+              ? 'On iPhone / iPad: Open in Safari -> Tap Share icon -> Tap "Add to Home Screen" -> Tap "Add" to get the GamerVault App Icon.'
+              : 'On Android / PC: Open in Google Chrome -> Tap top-right menu (⋮) -> Tap "Install app" or "Add to Home screen" -> Tap "Install" to get the GamerVault App Icon.');
+            var cpBtn=el('button','gv-btn pri','Copy Link for Chrome / Safari');cpBtn.type='button';
             var cl=el('button','gv-btn','Close');cl.type='button';
-            dlBtn.onclick=function(){
-              try{
-                var clone=document.documentElement.cloneNode(true);
-                var cloneRoot=clone.querySelector('#root');
-                if(cloneRoot){cloneRoot.innerHTML='';cloneRoot.className='';}
-                var dynStyles=clone.querySelectorAll('head style');
-                if(dynStyles.length>1){dynStyles[dynStyles.length-1].remove();}
-                var docHtml='<!doctype html>\\n'+clone.outerHTML;
-                var blob=new Blob([docHtml],{type:'text/html;charset=utf-8'});
-                var url=URL.createObjectURL(blob),l=document.createElement('a');
-                l.href=url;l.download='GamerVault.html';document.body.appendChild(l);l.click();document.body.removeChild(l);
-                setTimeout(function(){URL.revokeObjectURL(url);},4000);
-                window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:'html_downloaded',squad_count:squads.length});
-                closeModal();toast('Downloading GamerVault.html!');
-              }catch(e){toast('Download blocked by browser',true);}
+            cpBtn.onclick=function(){
+              copyText(window.location.href).then(function(ok){
+                if(ok){window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:'app_link_copied'});}
+                toast(ok?'Link copied! Open in Chrome or Safari to install App Icon.':'Copy blocked',!ok);
+              });
             };
-            cpBtn.onclick=function(){copyText(window.location.href).then(function(ok){toast(ok?'Link copied! Open in Chrome/Safari to install.':'Copy blocked',!ok);});};
             cl.onclick=closeModal;
             a.append(cpBtn,cl);
-            s.append(el('h2',null,'Install / Download GamerVault'),info,info2,dlBtn,a);modal(s);
+            s.append(el('h2',null,'Install GamerVault App Icon'),info,a);modal(s);
           }
+
+          var isStandalone=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;
+          var dlBtnEl=$('#gv-dl');
+          if(isStandalone&&dlBtnEl){dlBtnEl.style.display='none';}
+          window.addEventListener('appinstalled',function(){
+            if(dlBtnEl)dlBtnEl.style.display='none';
+            window.__deferredInstallPrompt=null;
+            window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:'app_installed',method:'pwa_browser_prompt'});
+            toast('GamerVault installed! Check your Home Screen.');
+          });
 
           $('#gv-sic').innerHTML=svg('search',16);
           $('#gv-home').onclick=function(){switchTab('squads');};
           Array.prototype.forEach.call(document.querySelectorAll('[data-tab]'),function(b){
             b.onclick=function(){switchTab(b.getAttribute('data-tab'));};
           });
-          $('#gv-dl').onclick=openDownloadModal;
+          $('#gv-dl').onclick=function(){
+            var p=window.__deferredInstallPrompt;
+            if(p&&typeof p.prompt==='function'){
+              p.prompt().then(function(){return p.userChoice;}).then(function(choice){
+                window.__deferredInstallPrompt=null;
+                if(choice&&choice.outcome==='accepted'){
+                  toast('Installing GamerVault App Icon...');
+                }
+              }).catch(function(){openInstallGuide();});
+              return;
+            }
+            openInstallGuide();
+          };
           $('#gv-add').onclick=openNewSquadModal;
           $('#gv-exp').onclick=openExportModal;
           $('#gv-imp').onclick=openImportModal;
